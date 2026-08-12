@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Middle Backend Developer · Полный Roadmap (Python)</title>
+    <title>Backend Roadmap · Полный курс (с темами из DS)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
@@ -333,11 +333,12 @@
                 <span style="color:#7c3aed;">DJANGO / FASTAPI</span> ·
                 <span style="color:#0b1a2b;">POSTGRESQL</span> ·
                 <span style="color:#4a5a6e;">DOCKER</span> ·
-                <span style="color:#2563eb;">CI/CD</span>
+                <span style="color:#2563eb;">CI/CD</span> ·
+                <span style="color:#7c3aed;">KUBERNETES</span>
             </div>
         </div>
         <div class="badge">
-            🎯 <span>~8 мес</span> · Middle Backend
+            🎯 <span>~8–10 мес</span> · Middle Backend
         </div>
     </div>
 
@@ -366,26 +367,26 @@
     (function() {
         const modules = [{
             id: 'm1',
-            title: '📘 1. Python — полный курс (с нуля)',
+            title: '📘 1. Python — полный курс (по Яндекс Практикуму)',
             meta: '1.5–2 мес',
             topics: [
-                { id: 't1', name: '1.1 Установка и настройка', sub: 'Python, VS Code, виртуальное окружение', resources: [{ label: 'python.org', url: 'https://python.org' }] },
-                { id: 't2', name: '1.2 Переменные, типы данных', sub: 'int, float, str, bool', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't3', name: '1.3 Ввод и вывод (input / print)', sub: 'f-строки', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't4', name: '1.4 Арифметические операции', sub: '+ - * / // % **', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't5', name: '1.5 Условный оператор', sub: 'if/elif/else, match-case', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't6', name: '1.6 Циклы', sub: 'for, while, вложенные циклы', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't7', name: '1.7 Строки, списки, кортежи', sub: 'методы, срезы', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't8', name: '1.8 Словари и множества', sub: 'методы, операции', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't9', name: '1.9 Списочные выражения', sub: 'list comprehensions, генераторы', resources: [{ label: 'Pythonru', url: 'https://pythonru.com/uroki/list-comprehension' }] },
-                { id: 't10', name: '1.10 Функции', sub: 'def, аргументы, return, области видимости', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't11', name: '1.11 ООП', sub: 'классы, объекты, методы, наследование', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
-                { id: 't12', name: '1.12 Исключения и файлы', sub: 'try/except, open(), with, JSON', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/478620/' }] },
+                { id: 't1', name: '1.1 Введение', sub: 'установка, переменные, типы данных, ввод/вывод, арифметика, форматирование', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't2', name: '1.2 Условный оператор', sub: 'if/elif/else, сравнение строк, match-case', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't3', name: '1.3 Циклы', sub: 'for, while, вложенные циклы', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't4', name: '1.4 Строки, списки, кортежи', sub: 'методы строк и списков, срезы, кортежи', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't5', name: '1.5 Словари и множества', sub: 'методы словарей, множества, операции', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't6', name: '1.6 Списочные выражения', sub: 'list comprehensions, генераторы', resources: [{ label: 'Pythonru', url: 'https://pythonru.com/uroki/list-comprehension' }] },
+                { id: 't7', name: '1.7 Встроенные функции для коллекций', sub: 'enumerate(), zip(), itertools', resources: [{ label: 'Docs Python', url: 'https://docs.python.org/3/library/itertools.html' }] },
+                { id: 't8', name: '1.8 Работа с файлами и JSON', sub: 'open(), with, json.dump(), json.load()', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/478620/' }] },
+                { id: 't9', name: '1.9 Функции', sub: 'def, аргументы, return, области видимости', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't10', name: '1.10 ООП', sub: 'классы, объекты, методы, наследование', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't11', name: '1.11 Исключения', sub: 'try/except/else/finally', resources: [{ label: 'Яндекс Хендбук', url: 'https://education.yandex.ru/handbook/python' }] },
+                { id: 't12', name: '1.12 Модули и библиотеки', sub: 'import, math, random, datetime', resources: [{ label: 'Docs Python', url: 'https://docs.python.org/3/library/' }] },
                 { id: 't13', name: '⭐ 1.13 Итоговый проект', sub: 'сборка всего изученного', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
         }, {
             id: 'm2',
-            title: '🗄️ 2. SQL и базы данных',
+            title: '🗄️ 2. SQL и базы данных (PostgreSQL)',
             meta: '3–4 нед',
             topics: [
                 { id: 't14', name: '2.1 SELECT, FROM, WHERE', sub: 'выборка данных', resources: [{ label: 'SQL Academy', url: 'https://sql-academy.org/ru' }] },
@@ -393,89 +394,95 @@
                 { id: 't16', name: '2.3 GROUP BY, HAVING', sub: 'агрегатные функции', resources: [{ label: 'SQL Academy', url: 'https://sql-academy.org/ru' }] },
                 { id: 't17', name: '2.4 Подзапросы и оконные функции', sub: 'продвинутый SQL', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/articles/1026156/' }] },
                 { id: 't18', name: '2.5 PostgreSQL', sub: 'установка, настройка, администрирование', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/578744/' }] },
-                { id: 't19', name: '2.6 Практика: LeetCode', sub: '20 задач (Easy/Medium)', resources: [{ label: 'LeetCode', url: 'https://leetcode.com/' }] }
+                { id: 't19', name: '2.6 Индексы и оптимизация', sub: 'ускорение запросов', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/512652/' }] },
+                { id: 't20', name: '2.7 Практика: LeetCode', sub: '20 задач (Easy/Medium)', resources: [{ label: 'LeetCode', url: 'https://leetcode.com/' }] }
             ]
         }, {
             id: 'm3',
-            title: '🌐 3. HTTP и основы веба',
+            title: '🌐 3. HTTP, API и веб-протоколы',
             meta: '2–3 нед',
             topics: [
-                { id: 't20', name: '3.1 Как работает HTTP', sub: 'запросы, ответы, статусы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/215117/' }] },
-                { id: 't21', name: '3.2 REST API', sub: 'принципы, методы, CRUD', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/483202/' }] },
-                { id: 't22', name: '3.3 WSGI и ASGI', sub: 'серверные протоколы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/445738/' }] },
-                { id: 't23', name: '3.4 Postman', sub: 'тестирование API', resources: [{ label: 'Postman', url: 'https://www.postman.com/' }] }
+                { id: 't21', name: '3.1 Как работает HTTP', sub: 'запросы, ответы, статусы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/215117/' }] },
+                { id: 't22', name: '3.2 REST API', sub: 'принципы, методы, CRUD', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/483202/' }] },
+                { id: 't23', name: '3.3 WSGI и ASGI', sub: 'серверные протоколы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/445738/' }] },
+                { id: 't24', name: '3.4 Postman', sub: 'тестирование API', resources: [{ label: 'Postman', url: 'https://www.postman.com/' }] },
+                { id: 't25', name: '3.5 Авторизация (JWT, OAuth2)', sub: 'аутентификация и безопасность', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/340194/' }] }
             ]
         }, {
             id: 'm4',
             title: '🚀 4. Фреймворки (FastAPI / Django)',
             meta: '2–3 мес',
             topics: [
-                { id: 't24', name: '4.1 FastAPI — основы', sub: 'маршруты, параметры, зависимости', resources: [{ label: 'FastAPI (рус.)', url: 'https://fastapi.tiangolo.com/ru/' }] },
-                { id: 't25', name: '4.2 FastAPI — продвинутый', sub: 'асинхронность, мидлвари, WebSockets', resources: [{ label: 'FastAPI (рус.)', url: 'https://fastapi.tiangolo.com/ru/' }] },
-                { id: 't26', name: '4.3 Django — основы', sub: 'модели, представления, шаблоны', resources: [{ label: 'Django (рус.)', url: 'https://django.fun/ru/' }] },
-                { id: 't27', name: '4.4 Django — продвинутый', sub: 'аутентификация, ORM, миграции', resources: [{ label: 'Django (рус.)', url: 'https://django.fun/ru/' }] },
-                { id: 't28', name: '4.5 SQLAlchemy', sub: 'ORM для Python', resources: [{ label: 'SQLAlchemy', url: 'https://docs.sqlalchemy.org/en/20/' }] }
+                { id: 't26', name: '4.1 FastAPI — основы', sub: 'маршруты, параметры, зависимости', resources: [{ label: 'FastAPI (рус.)', url: 'https://fastapi.tiangolo.com/ru/' }] },
+                { id: 't27', name: '4.2 FastAPI — продвинутый', sub: 'асинхронность, мидлвари, WebSockets', resources: [{ label: 'FastAPI (рус.)', url: 'https://fastapi.tiangolo.com/ru/' }] },
+                { id: 't28', name: '4.3 Django — основы', sub: 'модели, представления, шаблоны', resources: [{ label: 'Django (рус.)', url: 'https://django.fun/ru/' }] },
+                { id: 't29', name: '4.4 Django — продвинутый', sub: 'аутентификация, ORM, миграции', resources: [{ label: 'Django (рус.)', url: 'https://django.fun/ru/' }] },
+                { id: 't30', name: '4.5 SQLAlchemy', sub: 'ORM для Python', resources: [{ label: 'SQLAlchemy', url: 'https://docs.sqlalchemy.org/en/20/' }] }
             ]
         }, {
             id: 'm5',
             title: '🐳 5. Docker и контейнеризация',
             meta: '3–4 нед',
             topics: [
-                { id: 't29', name: '5.1 Docker — основы', sub: 'контейнеры, образы, Dockerfile', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/647113/' }] },
-                { id: 't30', name: '5.2 Docker Compose', sub: 'многоконтейнерные приложения', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/431096/' }] },
-                { id: 't31', name: '5.3 PostgreSQL в Docker', sub: 'настройка базы в контейнере', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/578744/' }] }
+                { id: 't31', name: '5.1 Docker — основы', sub: 'контейнеры, образы, Dockerfile', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/647113/' }] },
+                { id: 't32', name: '5.2 Docker Compose', sub: 'многоконтейнерные приложения', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/431096/' }] },
+                { id: 't33', name: '5.3 PostgreSQL в Docker', sub: 'настройка базы в контейнере', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/578744/' }] }
             ]
         }, {
             id: 'm6',
             title: '🔧 6. Тестирование и качество кода',
             meta: '3–4 нед',
             topics: [
-                { id: 't32', name: '6.1 Юнит-тесты (pytest)', sub: 'написание и запуск тестов', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/448742/' }] },
-                { id: 't33', name: '6.2 Интеграционные тесты', sub: 'тестирование API и БД', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/523094/' }] },
-                { id: 't34', name: '6.3 PEP8 и линтеры', sub: 'flake8, black, mypy', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/440908/' }] }
+                { id: 't34', name: '6.1 Юнит-тесты (pytest)', sub: 'написание и запуск тестов', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/448742/' }] },
+                { id: 't35', name: '6.2 Интеграционные тесты', sub: 'тестирование API и БД', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/523094/' }] },
+                { id: 't36', name: '6.3 PEP8 и линтеры', sub: 'flake8, black, mypy', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/440908/' }] }
             ]
         }, {
             id: 'm7',
             title: '⚙️ 7. CI/CD и деплой',
             meta: '3–4 нед',
             topics: [
-                { id: 't35', name: '7.1 GitHub Actions', sub: 'автоматизация сборки и тестов', resources: [{ label: 'GitHub Actions', url: 'https://github.com/features/actions' }] },
-                { id: 't36', name: '7.2 Деплой на сервер', sub: 'настройка сервера, nginx, gunicorn', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/519870/' }] },
-                { id: 't37', name: '7.3 Облачные платформы', sub: 'Yandex Cloud, AWS, GCP', resources: [{ label: 'Yandex Cloud', url: 'https://cloud.yandex.ru/' }] }
+                { id: 't37', name: '7.1 GitHub Actions', sub: 'автоматизация сборки и тестов', resources: [{ label: 'GitHub Actions', url: 'https://github.com/features/actions' }] },
+                { id: 't38', name: '7.2 Деплой на сервер', sub: 'настройка сервера, nginx, gunicorn', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/519870/' }] },
+                { id: 't39', name: '7.3 Облачные платформы', sub: 'Yandex Cloud, AWS, GCP', resources: [{ label: 'Yandex Cloud', url: 'https://cloud.yandex.ru/' }] },
+                { id: 't40', name: '7.4 Reverse Proxy', sub: 'Nginx, балансировка', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/620285/' }] }
             ]
         }, {
             id: 'm8',
-            title: '📊 8. Продвинутые темы',
-            meta: '1–1.5 мес',
+            title: '📊 8. Продвинутые темы (Артём Шумейко)',
+            meta: '1.5–2 мес',
             topics: [
-                { id: 't38', name: '8.1 Асинхронность (asyncio)', sub: 'async/await, aiohttp', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/337464/' }] },
-                { id: 't39', name: '8.2 Кеширование', sub: 'Redis, мемкеширование', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/187726/' }] },
-                { id: 't40', name: '8.3 Очереди', sub: 'RabbitMQ, Celery', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/417935/' }] },
-                { id: 't41', name: '8.4 Паттерны проектирования', sub: 'для бэкенда', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] }
+                { id: 't41', name: '8.1 Асинхронность (asyncio)', sub: 'async/await, aiohttp', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/337464/' }] },
+                { id: 't42', name: '8.2 Кеширование', sub: 'Redis, мемкеширование', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/187726/' }] },
+                { id: 't43', name: '8.3 Брокеры сообщений', sub: 'RabbitMQ, Celery, Kafka', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/417935/' }] },
+                { id: 't44', name: '8.4 S3 и файловое хранение', sub: 'облачное хранение', resources: [{ label: 'Yandex Cloud S3', url: 'https://cloud.yandex.ru/docs/storage/' }] },
+                { id: 't45', name: '8.5 Мониторинг и логирование', sub: 'Prometheus, Grafana, ELK', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] },
+                { id: 't46', name: '8.6 Kubernetes', sub: 'оркестрация контейнеров', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] }
             ]
         }, {
             id: 'm9',
-            title: '💼 9. Проекты (4–5 проектов)',
-            meta: '1.5–2 мес',
+            title: '💼 9. Проекты (5–6 проектов)',
+            meta: '2 мес',
             topics: [
-                { id: 't42', name: '⭐ 9.1 To-Do API', sub: 'FastAPI + PostgreSQL + Docker', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't43', name: '⭐ 9.2 Блог на Django', sub: 'админка, регистрация, комментарии', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't44', name: '⭐ 9.3 API для интернет-магазина', sub: 'FastAPI + JWT + Redis', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't45', name: '⭐ 9.4 Telegram бот', sub: 'aiogram + база данных', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't46', name: '⭐ 9.5 Full CI/CD проект', sub: 'тесты + деплой в облако', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
+                { id: 't47', name: '⭐ 9.1 To-Do API', sub: 'FastAPI + PostgreSQL + Docker', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't48', name: '⭐ 9.2 Блог на Django', sub: 'админка, регистрация, комментарии', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't49', name: '⭐ 9.3 API для интернет-магазина', sub: 'FastAPI + JWT + Redis', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't50', name: '⭐ 9.4 Telegram бот', sub: 'aiogram + база данных', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't51', name: '⭐ 9.5 Full CI/CD проект', sub: 'тесты + деплой в облако', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't52', name: '⭐ 9.6 Микросервис с брокером', sub: 'RabbitMQ + FastAPI', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
         }, {
             id: 'm10',
             title: '🎯 10. Карьера и Soft Skills',
             meta: 'параллельно',
             topics: [
-                { id: 't47', name: '10.1 Оформление портфолио', sub: 'GitHub, README.md', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't48', name: '10.2 Как составить резюме', sub: 'структура и советы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/660127/' }] },
-                { id: 't49', name: '10.3 Подготовка к собеседованиям', sub: 'типовые вопросы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/551026/' }] }
+                { id: 't53', name: '10.1 Оформление портфолио', sub: 'GitHub, README.md', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't54', name: '10.2 Как составить резюме', sub: 'структура и советы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/660127/' }] },
+                { id: 't55', name: '10.3 Подготовка к собеседованиям', sub: 'типовые вопросы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/551026/' }] }
             ]
         }];
 
-        const STORAGE_KEY = 'ds_ml_ai_roadmap_complete';
+        const STORAGE_KEY = 'backend_roadmap_full';
 
         function loadProgress() {
             try {
