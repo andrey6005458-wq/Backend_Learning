@@ -32,5 +32,5 @@ def month(number, language):
     return MONTH[language][number - 1]
 
 
-result = month(7, "en")
+result = month(2, "en")
 print(result)
