@@ -1,5 +1,6 @@
-class Car:
 
+
+class Car:
     def __init__(self, color, consumption, tank_volume, mileage=0):
         self.color = color
         self.consumption = consumption
@@ -8,26 +9,27 @@ class Car:
         self.mileage = mileage
         self.engine_on = False
 
+
     def start_engine(self):
-        if not self.engine_on and self.reserve > 0:
+        if not self.engine_on:
             self.engine_on = True
-            return "Двигатель запущен."
-        return "Двигатель уже был запущен."
+            return "Двигатель запущен"
+        return "Двигатель уже запущен"
 
     def stop_engine(self):
         if self.engine_on:
             self.engine_on = False
-            return "Двигатель остановлен."
-        return "Двигатель уже был остановлен."
+            return "Двигатель остановлен"
+        return "Двигатель уже был остановлен"
 
     def drive(self, distance):
         if not self.engine_on:
-            return "Двигатель не запущен."
+            return "Двигатель не запущен"
         if self.reserve / self.consumption * 100 < distance:
-            return "Малый запас топлива."
+            return "Малый запас топлива"
         self.mileage += distance
         self.reserve -= distance / 100 * self.consumption
-        return f"Проехали {distance} км. Остаток топлива: {self.reserve} л."
+        return f"Проехали {distance} км. Остаток топлива {self.reserve} л."
 
     def refuel(self):
         self.reserve = self.tank_volume
