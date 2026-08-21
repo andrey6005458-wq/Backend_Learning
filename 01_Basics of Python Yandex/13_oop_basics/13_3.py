@@ -18,6 +18,3 @@ for time in range(5):
     else:
         first_button.click()
 print(first_button.count(), second_button.count())
-
-
-
