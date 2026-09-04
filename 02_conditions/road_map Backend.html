@@ -346,7 +346,7 @@
             </div>
         </div>
         <div class="badge">
-            🎯 <span>~8–10 мес</span> · Middle Backend
+            🎯 <span>~9–11 мес</span> · Middle Backend
         </div>
     </div>
 
@@ -433,85 +433,87 @@
             ]
         }, {
             id: 'm4',
-            title: '🚀 4. FastAPI — полный стек',
-            meta: '2–3 мес',
+            title: '🚀 4. FastAPI — полный стек (включая SQLAlchemy)',
+            meta: '3–4 мес',
             topics: [
                 { id: 't34', name: '4.1 FastAPI — основы', sub: 'маршруты, параметры, зависимости', resources: [{ label: 'FastAPI (рус.)', url: 'https://fastapi.tiangolo.com/ru/' }] },
                 { id: 't35', name: '4.2 Pydantic', sub: 'модели, валидация, Field, вложенные модели', resources: [{ label: 'Pydantic', url: 'https://docs.pydantic.dev/latest/' }] },
                 { id: 't36', name: '4.3 FastAPI — продвинутый', sub: 'асинхронность, мидлвари, WebSockets', resources: [{ label: 'FastAPI (рус.)', url: 'https://fastapi.tiangolo.com/ru/' }] },
-                { id: 't37', name: '4.4 SQLAlchemy', sub: 'модели, сессии, запросы, отношения', resources: [{ label: 'SQLAlchemy', url: 'https://docs.sqlalchemy.org/en/20/' }] },
-                { id: 't38', name: '4.5 Alembic', sub: 'миграции, init, revision, upgrade, downgrade', resources: [{ label: 'Alembic', url: 'https://alembic.sqlalchemy.org/en/latest/' }] },
-                { id: 't39', name: '4.6 Async SQLAlchemy', sub: 'асинхронная работа с БД', resources: [{ label: 'SQLAlchemy Async', url: 'https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html' }] },
-                { id: 't40', name: '⭐ 4.7 Пет-проект: API отелей', sub: 'FastAPI + Pydantic + SQLAlchemy + Alembic + PostgreSQL', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
+                { id: 't37', name: '4.4 SQLAlchemy Core — основы', sub: 'подключение, движок, метаданные, создание таблиц, CRUD через Core', resources: [{ label: 'Stepik SQLAlchemy', url: 'https://stepik.org/course/125133/' }] },
+                { id: 't38', name: '4.5 SQLAlchemy ORM — модели и отношения', sub: 'объявление моделей, One-to-Many, Many-to-Many, сессии', resources: [{ label: 'Stepik SQLAlchemy', url: 'https://stepik.org/course/125133/' }] },
+                { id: 't39', name: '4.6 SQLAlchemy ORM — запросы и оптимизация', sub: 'filter, join, joinedload, подзапросы, агрегации', resources: [{ label: 'Stepik SQLAlchemy', url: 'https://stepik.org/course/125133/' }] },
+                { id: 't40', name: '4.7 Alembic', sub: 'миграции, init, revision, upgrade, downgrade, autogenerate', resources: [{ label: 'Alembic', url: 'https://alembic.sqlalchemy.org/en/latest/' }] },
+                { id: 't41', name: '4.8 Async SQLAlchemy', sub: 'асинхронная работа с БД, AsyncSession, async queries', resources: [{ label: 'SQLAlchemy Async', url: 'https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html' }] },
+                { id: 't42', name: '⭐ 4.9 Пет-проект: API отелей', sub: 'FastAPI + Pydantic + SQLAlchemy + Alembic + Async + PostgreSQL', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
         }, {
             id: 'm5',
             title: '🐳 5. Docker и контейнеризация',
             meta: '3–4 нед',
             topics: [
-                { id: 't41', name: '5.1 Docker — основы', sub: 'контейнеры, образы, Dockerfile', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/647113/' }] },
-                { id: 't42', name: '5.2 Docker Compose', sub: 'многоконтейнерные приложения', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/431096/' }] },
-                { id: 't43', name: '5.3 PostgreSQL в Docker', sub: 'настройка базы в контейнере', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/578744/' }] },
-                { id: 't44', name: '5.4 Docker для FastAPI', sub: 'сборка и запуск API в контейнере', resources: [{ label: 'FastAPI Docker', url: 'https://fastapi.tiangolo.com/deployment/docker/' }] }
+                { id: 't43', name: '5.1 Docker — основы', sub: 'контейнеры, образы, Dockerfile', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/647113/' }] },
+                { id: 't44', name: '5.2 Docker Compose', sub: 'многоконтейнерные приложения', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/431096/' }] },
+                { id: 't45', name: '5.3 PostgreSQL в Docker', sub: 'настройка базы в контейнере', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/578744/' }] },
+                { id: 't46', name: '5.4 Docker для FastAPI', sub: 'сборка и запуск API в контейнере', resources: [{ label: 'FastAPI Docker', url: 'https://fastapi.tiangolo.com/deployment/docker/' }] }
             ]
         }, {
             id: 'm6',
             title: '🔧 6. Тестирование и качество кода',
             meta: '3–4 нед',
             topics: [
-                { id: 't45', name: '6.1 Юнит-тесты (pytest)', sub: 'написание и запуск тестов', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/448742/' }] },
-                { id: 't46', name: '6.2 Интеграционные тесты', sub: 'тестирование API и БД', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/523094/' }] },
-                { id: 't47', name: '6.3 PEP8 и линтеры', sub: 'flake8, black, mypy', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/440908/' }] }
+                { id: 't47', name: '6.1 Юнит-тесты (pytest)', sub: 'написание и запуск тестов', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/448742/' }] },
+                { id: 't48', name: '6.2 Интеграционные тесты', sub: 'тестирование API и БД', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/523094/' }] },
+                { id: 't49', name: '6.3 PEP8 и линтеры', sub: 'flake8, black, mypy', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/440908/' }] }
             ]
         }, {
             id: 'm7',
             title: '⚙️ 7. CI/CD и деплой',
             meta: '3–4 нед',
             topics: [
-                { id: 't48', name: '7.1 GitHub Actions', sub: 'автоматизация сборки и тестов', resources: [{ label: 'GitHub Actions', url: 'https://github.com/features/actions' }] },
-                { id: 't49', name: '7.2 GitLab CI/CD', sub: 'пайплайны, сборка, тестирование', resources: [{ label: 'GitLab Docs', url: 'https://docs.gitlab.com/ru/ee/ci/' }] },
-                { id: 't50', name: '7.3 Деплой на сервер', sub: 'настройка сервера, nginx, gunicorn', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/519870/' }] },
-                { id: 't51', name: '7.4 Облачные платформы', sub: 'Render, Railway, Yandex Cloud', resources: [{ label: 'Render', url: 'https://render.com/' }] },
-                { id: 't52', name: '7.5 Reverse Proxy', sub: 'Nginx, балансировка', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/620285/' }] }
+                { id: 't50', name: '7.1 GitHub Actions', sub: 'автоматизация сборки и тестов', resources: [{ label: 'GitHub Actions', url: 'https://github.com/features/actions' }] },
+                { id: 't51', name: '7.2 GitLab CI/CD', sub: 'пайплайны, сборка, тестирование', resources: [{ label: 'GitLab Docs', url: 'https://docs.gitlab.com/ru/ee/ci/' }] },
+                { id: 't52', name: '7.3 Деплой на сервер', sub: 'настройка сервера, nginx, gunicorn', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/519870/' }] },
+                { id: 't53', name: '7.4 Облачные платформы', sub: 'Render, Railway, Yandex Cloud', resources: [{ label: 'Render', url: 'https://render.com/' }] },
+                { id: 't54', name: '7.5 Reverse Proxy', sub: 'Nginx, балансировка', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/620285/' }] }
             ]
         }, {
             id: 'm8',
             title: '⚡ 8. Асинхронность и брокеры сообщений',
             meta: '1.5–2 мес',
             topics: [
-                { id: 't53', name: '8.1 Асинхронность (asyncio)', sub: 'async/await, aiohttp', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/337464/' }] },
-                { id: 't54', name: '8.2 Кеширование (Redis)', sub: 'мемкеширование, хранение сессий', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/187726/' }] },
-                { id: 't55', name: '8.3 Брокеры сообщений', sub: 'RabbitMQ, Celery, Kafka', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/417935/' }] },
-                { id: 't56', name: '8.4 S3 и файловое хранение', sub: 'облачное хранение', resources: [{ label: 'Yandex Cloud S3', url: 'https://cloud.yandex.ru/docs/storage/' }] }
+                { id: 't55', name: '8.1 Асинхронность (asyncio)', sub: 'async/await, aiohttp', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/337464/' }] },
+                { id: 't56', name: '8.2 Кеширование (Redis)', sub: 'мемкеширование, хранение сессий', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/187726/' }] },
+                { id: 't57', name: '8.3 Брокеры сообщений', sub: 'RabbitMQ, Celery, Kafka', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/417935/' }] },
+                { id: 't58', name: '8.4 S3 и файловое хранение', sub: 'облачное хранение', resources: [{ label: 'Yandex Cloud S3', url: 'https://cloud.yandex.ru/docs/storage/' }] }
             ]
         }, {
             id: 'm9',
             title: '📊 9. Мониторинг и оркестрация',
             meta: '1–1.5 мес',
             topics: [
-                { id: 't57', name: '9.1 Мониторинг и логирование', sub: 'Prometheus, Grafana, ELK', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] },
-                { id: 't58', name: '9.2 Kubernetes', sub: 'оркестрация контейнеров', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] }
+                { id: 't59', name: '9.1 Мониторинг и логирование', sub: 'Prometheus, Grafana, ELK', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] },
+                { id: 't60', name: '9.2 Kubernetes', sub: 'оркестрация контейнеров', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] }
             ]
         }, {
             id: 'm10',
             title: '💼 10. Проекты (5–6 проектов)',
             meta: '2 мес',
             topics: [
-                { id: 't59', name: '⭐ 10.1 To-Do API', sub: 'FastAPI + PostgreSQL + Docker', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't60', name: '⭐ 10.2 API интернет-магазина', sub: 'FastAPI + JWT + Redis', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't61', name: '⭐ 10.3 Telegram бот', sub: 'aiogram + база данных', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't62', name: '⭐ 10.4 Full CI/CD проект', sub: 'тесты + деплой в облако', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't63', name: '⭐ 10.5 Микросервис с брокером', sub: 'RabbitMQ + FastAPI', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't64', name: '⭐ 10.6 API с асинхронным WebSocket', sub: 'чаты, уведомления, real-time', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
+                { id: 't61', name: '⭐ 10.1 To-Do API', sub: 'FastAPI + PostgreSQL + Docker', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't62', name: '⭐ 10.2 API интернет-магазина', sub: 'FastAPI + JWT + Redis', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't63', name: '⭐ 10.3 Telegram бот', sub: 'aiogram + база данных', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't64', name: '⭐ 10.4 Full CI/CD проект', sub: 'тесты + деплой в облако', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't65', name: '⭐ 10.5 Микросервис с брокером', sub: 'RabbitMQ + FastAPI', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't66', name: '⭐ 10.6 API с асинхронным WebSocket', sub: 'чаты, уведомления, real-time', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
         }, {
             id: 'm11',
             title: '🎯 11. Карьера и Soft Skills',
             meta: 'параллельно',
             topics: [
-                { id: 't65', name: '11.1 Оформление портфолио', sub: 'GitHub, README.md', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
-                { id: 't66', name: '11.2 Как составить резюме', sub: 'структура и советы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/660127/' }] },
-                { id: 't67', name: '11.3 Подготовка к собеседованиям', sub: 'типовые вопросы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/551026/' }] }
+                { id: 't67', name: '11.1 Оформление портфолио', sub: 'GitHub, README.md', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
+                { id: 't68', name: '11.2 Как составить резюме', sub: 'структура и советы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/660127/' }] },
+                { id: 't69', name: '11.3 Подготовка к собеседованиям', sub: 'типовые вопросы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/551026/' }] }
             ]
         }];
 
