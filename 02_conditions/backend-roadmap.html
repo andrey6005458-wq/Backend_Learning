@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend Roadmap — Как начать проект с нуля</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --bg: #0d1117;
+        --bg-card: #161b22;
+        --bg-hover: #1c2128;
+        --border: #30363d;
+        --text: #e6edf3;
+        --text-dim: #8b949e;
+        --text-bright: #ffffff;
+        --accent: #58a6ff;
+        --accent-bg: #1f6feb20;
+        --green: #3fb950;
+        --green-bg: #3fb95020;
+        --yellow: #d29922;
+        --yellow-bg: #d2992220;
+        --red: #f85149;
+        --red-bg: #f8514920;
+        --purple: #bc8cff;
+        --purple-bg: #bc8cff20;
+        --cyan: #39d0d8;
+        --radius: 12px;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        font-size: 15px;
+    }
+
+    /* ==================== HEADER ==================== */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(13, 17, 23, 0.95);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        padding: 16px 24px;
+    }
+
+    .header-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 17px;
+        color: var(--text-bright);
+    }
+
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--accent), var(--purple));
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .progress-wrapper {
+        flex: 1;
+        min-width: 200px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .progress-bar {
+        flex: 1;
+        height: 8px;
+        background: var(--bg-card);
+        border-radius: 4px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--green), var(--accent));
+        width: 0%;
+        transition: width 0.4s ease;
+    }
+
+    .progress-text {
+        font-size: 13px;
+        color: var(--text-dim);
+        font-variant-numeric: tabular-nums;
+        min-width: 80px;
+        text-align: right;
+    }
+
+    /* ==================== SEARCH & FILTERS ==================== */
+    .controls {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 20px 24px 0;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .search-box {
+        flex: 1;
+        min-width: 200px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: var(--text);
+        font-size: 14px;
+        font-family: inherit;
+        transition: border-color 0.2s;
+    }
+
+    .search-box:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    .filter-btn {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+        font-weight: 500;
+    }
+
+    .filter-btn:hover {
+        background: var(--bg-hover);
+        color: var(--text);
+    }
+
+    .filter-btn.active {
+        background: var(--accent-bg);
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    /* ==================== MAIN ==================== */
+    main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+
+    .phase {
+        margin-bottom: 28px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--bg-card);
+        overflow: hidden;
+    }
+
+    .phase-header {
+        padding: 18px 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        user-select: none;
+        transition: background 0.2s;
+    }
+
+    .phase-header:hover {
+        background: var(--bg-hover);
+    }
+
+    .phase-num {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--accent-bg);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 15px;
+        flex-shrink: 0;
+    }
+
+    .phase-title {
+        flex: 1;
+    }
+
+    .phase-title h2 {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 2px;
+    }
+
+    .phase-title p {
+        font-size: 13px;
+        color: var(--text-dim);
+    }
+
+    .phase-toggle {
+        color: var(--text-dim);
+        font-size: 20px;
+        transition: transform 0.3s;
+        flex-shrink: 0;
+    }
+
+    .phase.open .phase-toggle {
+        transform: rotate(180deg);
+    }
+
+    .phase-body {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+        border-top: 1px solid transparent;
+    }
+
+    .phase.open .phase-body {
+        max-height: 20000px;
+        border-top-color: var(--border);
+    }
+
+    .phase-body-inner {
+        padding: 22px;
+    }
+
+    /* ==================== STEPS ==================== */
+    .step {
+        display: flex;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child {
+        border-bottom: none;
+    }
+
+    .step-check {
+        width: 22px;
+        height: 22px;
+        border: 2px solid var(--border);
+        border-radius: 6px;
+        cursor: pointer;
+        flex-shrink: 0;
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        background: transparent;
+    }
+
+    .step-check:hover {
+        border-color: var(--accent);
+    }
+
+    .step-check.checked {
+        background: var(--green);
+        border-color: var(--green);
+    }
+
+    .step-check.checked::after {
+        content: '✓';
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .step.done .step-title {
+        text-decoration: line-through;
+        color: var(--text-dim);
+    }
+
+    .step-body {
+        flex: 1;
+    }
+
+    .step-title {
+        font-weight: 600;
+        color: var(--text-bright);
+        margin-bottom: 6px;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .step-desc {
+        color: var(--text-dim);
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .step-desc strong {
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    .step-code {
+        background: #0d1117;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 13px;
+        color: var(--cyan);
+        margin-top: 10px;
+        overflow-x: auto;
+        white-space: pre;
+        line-height: 1.7;
+    }
+
+    .step-code .cmd { color: var(--cyan); }
+    .step-code .comment { color: var(--text-dim); font-style: italic; }
+    .step-code .string { color: var(--yellow); }
+    .step-code .keyword { color: var(--purple); }
+
+    .step-why {
+        background: var(--accent-bg);
+        border-left: 3px solid var(--accent);
+        padding: 10px 14px;
+        border-radius: 6px;
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--text);
+    }
+
+    .step-why strong {
+        color: var(--accent);
+    }
+
+    /* ==================== TAGS ==================== */
+    .tag {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .tag.git { background: var(--red-bg); color: var(--red); }
+    .tag.python { background: var(--yellow-bg); color: var(--yellow); }
+    .tag.db { background: var(--green-bg); color: var(--green); }
+    .tag.api { background: var(--purple-bg); color: var(--purple); }
+    .tag.docker { background: var(--accent-bg); color: var(--accent); }
+    .tag.test { background: var(--cyan); color: var(--bg); }
+    .tag.deploy { background: var(--green-bg); color: var(--green); }
+    .tag.arch { background: var(--purple-bg); color: var(--purple); }
+
+    /* ==================== QUESTION BLOCK ==================== */
+    .questions {
+        background: var(--yellow-bg);
+        border: 1px solid var(--yellow);
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin: 16px 0;
+    }
+
+    .questions h3 {
+        color: var(--yellow);
+        font-size: 14px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .questions ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .questions li {
+        padding: 6px 0 6px 24px;
+        position: relative;
+        font-size: 14px;
+        color: var(--text);
+    }
+
+    .questions li::before {
+        content: '?';
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 18px;
+        height: 18px;
+        background: var(--yellow);
+        color: var(--bg);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    /* ==================== WARNING BLOCK ==================== */
+    .warning {
+        background: var(--red-bg);
+        border: 1px solid var(--red);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin: 14px 0;
+        font-size: 14px;
+        color: var(--text);
+    }
+
+    .warning strong {
+        color: var(--red);
+    }
+
+    /* ==================== HIDDEN ==================== */
+    .hidden {
+        display: none !important;
+    }
+
+    /* ==================== FOOTER ==================== */
+    footer {
+        text-align: center;
+        padding: 40px 24px;
+        color: var(--text-dim);
+        font-size: 13px;
+        border-top: 1px solid var(--border);
+        margin-top: 40px;
+    }
+
+    footer strong {
+        color: var(--accent);
+    }
+
+    /* ==================== SCROLLBAR ==================== */
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 5px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* ==================== MOBILE ==================== */
+    @media (max-width: 700px) {
+        .header-inner { flex-direction: column; align-items: stretch; }
+        .progress-wrapper { width: 100%; }
+        .phase-header { padding: 14px 16px; }
+        .phase-body-inner { padding: 16px; }
+        .step-code { font-size: 12px; padding: 10px 12px; }
+        .controls { padding: 16px 16px 0; }
+        main { padding: 16px; }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <div class="logo-icon">⚙️</div>
+            <span>Backend Roadmap</span>
+        </div>
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">0 / 0</div>
+        </div>
+    </div>
+</header>
+
+<div class="controls">
+    <input type="text" class="search-box" id="searchBox" placeholder="🔍 Поиск по шагам...">
+    <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="git">Git</button>
+        <button class="filter-btn" data-filter="python">Python</button>
+        <button class="filter-btn" data-filter="arch">Архитектура</button>
+        <button class="filter-btn" data-filter="db">БД</button>
+        <button class="filter-btn" data-filter="api">API</button>
+        <button class="filter-btn" data-filter="docker">Docker</button>
+        <button class="filter-btn" data-filter="test">Тесты</button>
+        <button class="filter-btn" data-filter="deploy">Деплой</button>
+    </div>
+</div>
+
+<main>
+
+<!-- ==================== PHASE 0 ==================== -->
+<div class="phase" data-phase="0">
+    <div class="phase-header">
+        <div class="phase-num">0</div>
+        <div class="phase-title">
+            <h2>Прежде чем писать код</h2>
+            <p>Ответь на вопросы — определись с архитектурой и стеком</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="questions">
+                <h3>❓ Вопросы, на которые надо ответить до строчки кода</h3>
+                <ul>
+                    <li><strong>Какую задачу решаю?</strong> В одном предложении. Если не можешь — ещё не готов.</li>
+                    <li><strong>Кто пользователь?</strong> Один человек? Команда? Миллион?</li>
+                    <li><strong>Монолит или микросервисы?</strong> Для 99% проектов — монолит. Микросервисы — когда команда 20+ и есть реальная боль.</li>
+                    <li><strong>Какая нагрузка?</strong> 10 RPS или 10 000 RPS? От этого зависит стек.</li>
+                    <li><strong>Есть ли команда?</strong> Один — монолит + простота. Команда — микросервисы могут помочь.</li>
+                    <li><strong>Какой срок?</strong> MVP за 2 недели или продукт на годы?</li>
+                    <li><strong>Реляционная БД или NoSQL?</strong> По умолчанию — PostgreSQL. Нужен гибкий JSON — PostgreSQL JSONB. Нужны документы — MongoDB.</li>
+                    <li><strong>Синхронный или асинхронный?</strong> FastAPI + async — стандарт. Django — sync, но проще.</li>
+                    <li><strong>Куда деплоить?</strong> VPS за €4, облако, K8s? Начинай с VPS.</li>
+                    <li><strong>Какой бюджет?</strong> VPS €4–20/мес — хватит на годы.</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <strong>⚠️ Антипаттерн:</strong> «Начну с микросервисов, Kafka, K8s, чтобы сразу как в Google». <strong>Нет.</strong> Google начинал с монолита на Python. Сначала — рабочая MVP на монолите. Потом — рефакторинг.
+            </div>
+
+            <div class="step" data-tags="arch">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Реши: монолит или микросервисы <span class="tag arch">Архитектура</span></div>
+                    <div class="step-desc">
+                        <strong>Монолит</strong> — один процесс, одна БД, один деплой. <strong>Микросервисы</strong> — много процессов, много БД, много деплоев, нужен K8s.
+                        <br><br>
+                        <strong>Правило:</strong> начинай с монолита. Разбивай на сервисы, когда больно (команда мешает, деплой страшный, модуль тормозит других).
+                    </div>
+                    <div class="step-why">
+                        <strong>Почему:</strong> Instagram, Twitter, Stack Overflow — миллионы пользователей на монолитах. Микросервисы — не про масштаб, а про команду.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="arch">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Выбери фреймворк <span class="tag arch">Архитектура</span></div>
+                    <div class="step-desc">
+                        <strong>FastAPI</strong> — async, Pydantic, автодоки, современно. <strong>Django</strong> — батарейки в комплекте (ORM, админка, auth). <strong>Flask</strong> — минимализм.
+                        <br><br>
+                        Для backend + API — <strong>FastAPI</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="arch">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Выбери БД <span class="tag arch">Архитектура</span> <span class="tag db">БД</span></div>
+                    <div class="step-desc">
+                        По умолчанию — <strong>PostgreSQL</strong>. Нужна гибкость JSON — <strong>PostgreSQL JSONB</strong>. Нужны документы — <strong>MongoDB</strong>. Кеш — <strong>Redis</strong>. Очереди — <strong>RabbitMQ</strong>/<strong>Kafka</strong> (позже).
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 1 ==================== -->
+<div class="phase" data-phase="1">
+    <div class="phase-header">
+        <div class="phase-num">1</div>
+        <div class="phase-title">
+            <h2>Инициализация проекта</h2>
+            <p>Git, окружение, зависимости, структура папок</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="git">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай репозиторий на GitHub/GitLab <span class="tag git">Git</span></div>
+                    <div class="step-desc">
+                        Создай пустой репозиторий <strong>без</strong> README, .gitignore, лицензии. Иначе — конфликт при push.
+                    </div>
+                    <div class="step-why">
+                        <strong>Почему:</strong> пустой репозиторий = твой локальный код станет основной веткой без merge.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="git">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай папку проекта и войди в неё <span class="tag git">Git</span></div>
+                    <div class="step-code"><span class="cmd">mkdir project_manager</span>
+<span class="cmd">cd project_manager</span></div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="git">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">git init + ветка main <span class="tag git">Git</span></div>
+                    <div class="step-code"><span class="cmd">git init</span>
+<span class="cmd">git branch -m main</span>
+<span class="cmd">git config --global init.defaultBranch main</span>  <span class="comment"># на будущее</span></div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="git">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай .gitignore <span class="tag git">Git</span></div>
+                    <div class="step-desc">Игнорируй: <code>.venv/</code>, <code>__pycache__/</code>, <code>*.pyc</code>, <code>*.db</code>, <code>.env</code>, <code>.idea/</code>, <code>.DS_Store</code>, <code>pgdata/</code>.</div>
+                    <div class="step-code"><span class="comment"># Виртуальное окружение</span>
+<span class="string">.venv/</span>
+<span class="string">venv/</span>
+
+<span class="comment"># Python</span>
+<span class="string">__pycache__/</span>
+<span class="string">*.py[cod]</span>
+
+<span class="comment"># Секреты</span>
+<span class="string">.env</span>
+<span class="string">.env.local</span>
+
+<span class="comment"># БД (локальные)</span>
+<span class="string">*.sqlite</span>
+<span class="string">*.db</span>
+<span class="string">pgdata/</span>
+
+<span class="comment"># IDE</span>
+<span class="string">.idea/</span>
+<span class="string">.vscode/</span>
+<span class="string">*.iml</span>
+
+<span class="comment"># macOS</span>
+<span class="string">.DS_Store</span>
+<span class="string">._*</span></div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="python">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Установи uv (менеджер зависимостей) <span class="tag python">Python</span></div>
+                    <div class="step-code"><span class="comment"># macOS / Linux</span>
+<span class="cmd">curl -LsSf https://astral.sh/uv/install.sh | sh</span>
+
+<span class="comment"># Windows (PowerShell)</span>
+<span class="cmd">powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</span></div>
+                    <div class="step-why">
+                        <strong>Почему uv:</strong> быстрее pip и poetry в 10–100 раз, единый pyproject.toml + uv.lock, автоматически скачивает Python.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="python">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай pyproject.toml через uv init <span class="tag python">Python</span></div>
+                    <div class="step-code"><span class="cmd">uv init</span>
+<span class="cmd">uv python pin 3.13</span></div>
+                    <div class="step-desc">Создаётся <code>pyproject.toml</code>, <code>.python-version</code>. Python фиксируется в проекте.</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="python">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Добавь базовые зависимости <span class="tag python">Python</span></div>
+                    <div class="step-code"><span class="cmd">uv add "fastapi[standard]" sqlalchemy "psycopg[binary]" pydantic-settings python-dotenv</span>
+
+<span class="comment"># dev-зависимости</span>
+<span class="cmd">uv add --dev ruff pytest pytest-asyncio httpx</span></div>
+                    <div class="step-desc">
+                        <code>fastapi[standard]</code> — uvicorn, httpx, jinja2.<br>
+                        <code>psycopg[binary]</code> — драйвер PostgreSQL.<br>
+                        <code>pydantic-settings</code> — конфиг из .env.<br>
+                        <code>ruff</code> — линтер + форматтер.<br>
+                        <code>pytest</code> — тесты.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="python">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай структуру папок <span class="tag arch">Архитектура</span></div>
+                    <div class="step-code"><span class="cmd">mkdir -p app/database app/models app/schemas tests</span>
+<span class="cmd">touch app/__init__.py app/database/__init__.py app/models/__init__.py app/schemas/__init__.py tests/__init__.py</span></div>
+                    <div class="step-desc">Структура проекта (модульный монолит):</div>
+                    <div class="step-code"><span class="comment">project_manager/</span>
+├── app/
+│   ├── __init__.py
+│   ├── main.py              <span class="comment"># точка входа</span>
+│   ├── database/
+│   │   ├── __init__.py
+│   │   ├── config.py        <span class="comment"># настройки БД</span>
+│   │   └── engine.py        <span class="comment"># engine + session</span>
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── base.py          <span class="comment"># Base для ORM</span>
+│   └── schemas/
+│       └── __init__.py
+├── tests/
+├── .env                     <span class="comment"># не коммитим</span>
+├── .env.example             <span class="comment"># коммитим</span>
+├── .gitignore
+├── pyproject.toml
+├── uv.lock
+└── README.md</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="git">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Первый коммит <span class="tag git">Git</span></div>
+                    <div class="step-code"><span class="cmd">git add .</span>
+<span class="cmd">git commit -m "chore: init project structure"</span>
+<span class="cmd">git remote add origin git@github.com:username/project_manager.git</span>
+<span class="cmd">git push -u origin main</span></div>
+                    <div class="step-why">
+                        <strong>Почему сразу push:</strong> чтобы код не потерялся, и была история.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 2 ==================== -->
+<div class="phase" data-phase="2">
+    <div class="phase-header">
+        <div class="phase-num">2</div>
+        <div class="phase-title">
+            <h2>Настройка окружения и конфигурации</h2>
+            <p>.env, Settings, config, логгирование</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="python">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай .env и .env.example <span class="tag python">Python</span></div>
+                    <div class="step-desc"><strong>.env.example</strong> — коммитим (без секретов). <strong>.env</strong> — не коммитим (с секретами).</div>
+                    <div class="step-code"><span class="comment"># .env.example</span>
+<span class="string">POSTGRES_USER=app_user</span>
+<span class="string">POSTGRES_PASSWORD=change_me</span>
+<span class="string">POSTGRES_HOST=localhost</span>
+<span class="string">POSTGRES_PORT=5432</span>
+<span class="string">POSTGRES_DB=project_manager</span></div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="python">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Напиши config.py через pydantic-settings <span class="tag python">Python</span></div>
+                    <div class="step-code"><span class="keyword">from</span> pydantic_settings <span class="keyword">import</span> BaseSettings, SettingsConfigDict
+
+
+<span class="keyword">class</span> Settings(BaseSettings):
+    postgres_user: str = <span class="string">"app_user"</span>
+    postgres_password: str = <span class="string">"secret"</span>
+    postgres_host: str = <span class="string">"localhost"</span>
+    postgres_port: int = 5432
+    postgres_db: str = <span class="string">"project_manager"</span>
+
+    model_config = SettingsConfigDict(
+        env_file=<span class="string">".env"</span>,
+        env_file_encoding=<span class="string">"utf-8"</span>,
+        case_sensitive=<span class="keyword">False</span>,
+    )
+
+    @property
+    <span class="keyword">def</span> database_url(self) -> str:
+        <span class="keyword">return</span> (
+            f<span class="string">"postgresql+psycopg://{self.postgres_user}:{self.postgres_password}"</span>
+            f<span class="string">"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"</span>
+        )
+
+
+settings = Settings()
+DATABASE_URL = settings.database_url</div>
+                    <div class="step-why">
+                        <strong>Почему pydantic-settings:</strong> валидация типов, автозагрузка из .env, автодополнение в IDE. Стандарт FastAPI.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="python db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Настрой логирование <span class="tag python">Python</span></div>
+                    <div class="step-desc">В проде — не <code>print</code>, а <code>logging</code>. Уровни: DEBUG, INFO, WARNING, ERROR.</div>
+                    <div class="step-code"><span class="keyword">import</span> logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format=<span class="string">"%(asctime)s [%(levelname)s] %(name)s: %(message)s"</span>,
+)
+logger = logging.getLogger(__name__)</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 3 ==================== -->
+<div class="phase" data-phase="3">
+    <div class="phase-header">
+        <div class="phase-num">3</div>
+        <div class="phase-title">
+            <h2>База данных</h2>
+            <p>Docker, Postgres, engine, session, Base</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="docker db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай docker-compose.yml для PostgreSQL <span class="tag docker">Docker</span></div>
+                    <div class="step-code">services:
+  db:
+    image: postgres:16
+    container_name: project_manager_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - <span class="string">"5432:5432"</span>
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [<span class="string">"CMD-SHELL"</span>, <span class="string">"pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"</span>]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:</div>
+                    <div class="step-code"><span class="cmd">docker compose up -d</span>
+<span class="cmd">docker compose ps</span>  <span class="comment"># должен быть healthy</span></div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай engine.py <span class="tag db">БД</span></div>
+                    <div class="step-code"><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine
+
+<span class="keyword">from</span> app.database.config <span class="keyword">import</span> DATABASE_URL
+
+
+engine = create_engine(
+    DATABASE_URL,
+    echo=<span class="keyword">True</span>,                    <span class="comment"># логировать SQL (для разработки)</span>
+    pool_size=5,
+    max_overflow=10,
+    pool_timeout=30,
+    pool_recycle=1800,
+    pool_pre_ping=<span class="keyword">True</span>,
+)</div>
+                    <div class="step-why">
+                        <strong>Почему один engine:</strong> пул соединений переиспользуется. <code>pool_pre_ping</code> — проверка живости. <code>pool_recycle</code> — пересоздание idle-соединений.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай Base для ORM-моделей <span class="tag db">БД</span></div>
+                    <div class="step-code"><span class="comment"># app/models/base.py</span>
+<span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> DeclarativeBase
+
+
+<span class="keyword">class</span> Base(DeclarativeBase):
+    <span class="string">"""Общий базовый класс для всех ORM-моделей."""</span>
+    <span class="keyword">pass</span></div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай первую модель <span class="tag db">БД</span></div>
+                    <div class="step-code"><span class="comment"># app/models/user.py</span>
+<span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> String
+<span class="keyword">from</span> sqlalchemy.orm <span class="keyword">import</span> Mapped, mapped_column
+
+<span class="keyword">from</span> app.models.base <span class="keyword">import</span> Base
+
+
+<span class="keyword">class</span> User(Base):
+    __tablename__ = <span class="string">"users"</span>
+
+    id: Mapped[int] = mapped_column(primary_key=<span class="keyword">True</span>)
+    name: Mapped[str] = mapped_column(String(100))
+    email: Mapped[str] = mapped_column(String(255), unique=<span class="keyword">True</span>)</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай session_getter (зависимость для FastAPI) <span class="tag db">БД</span></div>
+                    <div class="step-code"><span class="keyword">from</span> collections.abc <span class="keyword">import</span> AsyncGenerator
+<span class="keyword">from</span> sqlalchemy.ext.asyncio <span class="keyword">import</span> AsyncSession, async_sessionmaker
+
+<span class="keyword">from</span> app.database.engine <span class="keyword">import</span> engine
+
+
+async_session_maker = async_sessionmaker(engine, expire_on_commit=<span class="keyword">False</span>)
+
+
+<span class="keyword">async def</span> session_getter() -> AsyncGenerator[AsyncSession, <span class="keyword">None</span>]:
+    <span class="keyword">async with</span> async_session_maker() <span class="keyword">as</span> session:
+        <span class="keyword">yield</span> session</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Подключи Alembic (миграции) <span class="tag db">БД</span></div>
+                    <div class="step-code"><span class="cmd">uv add alembic</span>
+<span class="cmd">alembic init alembic</span>
+<span class="comment"># настрой alembic/env.py — импортируй Base и укажи target_metadata</span>
+<span class="cmd">alembic revision --autogenerate -m "create users"</span>
+<span class="cmd">alembic upgrade head</span></div>
+                    <div class="step-why">
+                        <strong>Почему Alembic:</strong> изменения схемы БД версионируются. Без этого — прод сломается при изменении модели.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 4 ==================== -->
+<div class="phase" data-phase="4">
+    <div class="phase-header">
+        <div class="phase-num">4</div>
+        <div class="phase-title">
+            <h2>API и ручки</h2>
+            <p>Pydantic-схемы, роутеры, CRUD, валидация</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="api">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай Pydantic-схемы <span class="tag api">API</span></div>
+                    <div class="step-desc">Схемы — что приходит и уходит через API. Отдельно от ORM-моделей.</div>
+                    <div class="step-code"><span class="comment"># app/schemas/user.py</span>
+<span class="keyword">from</span> pydantic <span class="keyword">import</span> BaseModel, ConfigDict, EmailStr
+
+
+<span class="keyword">class</span> UserBase(BaseModel):
+    name: str
+    email: EmailStr
+
+
+<span class="keyword">class</span> UserCreate(UserBase):
+    <span class="keyword">pass</span>
+
+
+<span class="keyword">class</span> UserRead(UserBase):
+    id: int
+    model_config = ConfigDict(from_attributes=<span class="keyword">True</span>)
+
+
+<span class="keyword">class</span> UserUpdate(BaseModel):
+    name: str | <span class="keyword">None</span> = <span class="keyword">None</span>
+    email: EmailStr | <span class="keyword">None</span> = <span class="keyword">None</span></div>
+                    <div class="step-why">
+                        <strong>Почему отдельно:</strong> ORM-модель — структура БД. Схема — структура API. Они не всегда совпадают (пароли, внутренние поля).
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="api db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай CRUD-функции <span class="tag api">API</span> <span class="tag db">БД</span></div>
+                    <div class="step-code"><span class="comment"># app/crud/user.py</span>
+<span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> select
+<span class="keyword">from</span> sqlalchemy.ext.asyncio <span class="keyword">import</span> AsyncSession
+
+<span class="keyword">from</span> app.models.user <span class="keyword">import</span> User
+<span class="keyword">from</span> app.schemas.user <span class="keyword">import</span> UserCreate
+
+
+<span class="keyword">async def</span> create_user(session: AsyncSession, data: UserCreate) -> User:
+    user = User(**data.model_dump())
+    session.add(user)
+    <span class="keyword">await</span> session.commit()
+    <span class="keyword">await</span> session.refresh(user)
+    <span class="keyword">return</span> user
+
+
+<span class="keyword">async def</span> get_user(session: AsyncSession, user_id: int) -> User | <span class="keyword">None</span>:
+    <span class="keyword">return await</span> session.get(User, user_id)
+
+
+<span class="keyword">async def</span> list_users(session: AsyncSession) -> list[User]:
+    result = <span class="keyword">await</span> session.execute(select(User))
+    <span class="keyword">return</span> list(result.scalars().all())</div>
+                    <div class="step-why">
+                        <strong>Почему отдельный CRUD:</strong> бизнес-логика отделена от роутеров. Легче тестировать, переиспользовать.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="api">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай роутер <span class="tag api">API</span></div>
+                    <div class="step-code"><span class="comment"># app/api/users.py</span>
+<span class="keyword">from</span> fastapi <span class="keyword">import</span> APIRouter, Depends, HTTPException, status
+<span class="keyword">from</span> sqlalchemy.ext.asyncio <span class="keyword">import</span> AsyncSession
+
+<span class="keyword">from</span> app.crud <span class="keyword">import</span> user <span class="keyword">as</span> crud
+<span class="keyword">from</span> app.database.session <span class="keyword">import</span> session_getter
+<span class="keyword">from</span> app.schemas.user <span class="keyword">import</span> UserCreate, UserRead
+
+router = APIRouter(prefix=<span class="string">"/users"</span>, tags=[<span class="string">"Users"</span>])
+
+
+@router.post(<span class="string">"/"</span>, response_model=UserRead, status_code=status.HTTP_201_CREATED)
+<span class="keyword">async def</span> create_user(
+    data: UserCreate,
+    session: AsyncSession = Depends(session_getter),
+):
+    <span class="keyword">return await</span> crud.create_user(session, data)
+
+
+@router.get(<span class="string">"/{user_id}"</span>, response_model=UserRead)
+<span class="keyword">async def</span> get_user(
+    user_id: int,
+    session: AsyncSession = Depends(session_getter),
+):
+    user = <span class="keyword">await</span> crud.get_user(session, user_id)
+    <span class="keyword">if not</span> user:
+        <span class="keyword">raise</span> HTTPException(status_code=404, detail=<span class="string">"User not found"</span>)
+    <span class="keyword">return</span> user</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="api">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Собери всё в main.py <span class="tag api">API</span></div>
+                    <div class="step-code"><span class="comment"># app/main.py</span>
+<span class="keyword">from</span> contextlib <span class="keyword">import</span> asynccontextmanager
+
+<span class="keyword">from</span> fastapi <span class="keyword">import</span> FastAPI
+
+<span class="keyword">from</span> app.api.users <span class="keyword">import</span> router <span class="keyword">as</span> users_router
+<span class="keyword">from</span> app.models.base <span class="keyword">import</span> Base
+<span class="keyword">from</span> app.database.engine <span class="keyword">import</span> engine
+
+
+@asynccontextmanager
+<span class="keyword">async def</span> lifespan(app: FastAPI):
+    <span class="comment"># startup</span>
+    <span class="keyword">async with</span> engine.begin() <span class="keyword">as</span> conn:
+        <span class="keyword">await</span> conn.run_sync(Base.metadata.create_all)
+    <span class="keyword">yield</span>
+    <span class="comment"># shutdown</span>
+    <span class="keyword">await</span> engine.dispose()
+
+
+app = FastAPI(title=<span class="string">"Project Manager"</span>, lifespan=lifespan)
+app.include_router(users_router, prefix=<span class="string">"/api/v1"</span>)
+
+
+@app.get(<span class="string">"/health"</span>)
+<span class="keyword">async def</span> health():
+    <span class="keyword">return</span> {<span class="string">"status"</span>: <span class="string">"ok"</span>}</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="api">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Запусти и проверь Swagger <span class="tag api">API</span></div>
+                    <div class="step-code"><span class="cmd">uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000</span>
+<span class="comment"># открой http://localhost:8000/docs</span></div>
+                    <div class="step-why">
+                        <strong>Почему Swagger:</strong> FastAPI сам генерирует документацию. <code>Try it out</code> — можно тестировать API прямо из браузера.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 5 ==================== -->
+<div class="phase" data-phase="5">
+    <div class="phase-header">
+        <div class="phase-num">5</div>
+        <div class="phase-title">
+            <h2>Тесты</h2>
+            <p>pytest, фикстуры, тестовая БД</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="test">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Настрой pytest и тестовую БД <span class="tag test">Тесты</span></div>
+                    <div class="step-desc">Тестовая БД — SQLite in-memory или отдельный Postgres. Каждый тест — чистая БД.</div>
+                    <div class="step-code"><span class="comment"># tests/conftest.py</span>
+<span class="keyword">import</span> pytest
+<span class="keyword">from</span> httpx <span class="keyword">import</span> AsyncClient
+<span class="keyword">from</span> app.main <span class="keyword">import</span> app
+
+
+@pytest.fixture
+<span class="keyword">async def</span> client():
+    <span class="keyword">async with</span> AsyncClient(app=app, base_url=<span class="string">"http://test"</span>) <span class="keyword">as</span> c:
+        <span class="keyword">yield</span> c</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="test">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Напиши первый тест <span class="tag test">Тесты</span></div>
+                    <div class="step-code"><span class="comment"># tests/test_users.py</span>
+<span class="keyword">async def</span> test_create_user(client):
+    response = <span class="keyword">await</span> client.post(<span class="string">"/api/v1/users/"</span>, json={
+        <span class="string">"name"</span>: <span class="string">"Andrey"</span>,
+        <span class="string">"email"</span>: <span class="string">"andrey@example.com"</span>,
+    })
+    <span class="keyword">assert</span> response.status_code == 201
+    data = response.json()
+    <span class="keyword">assert</span> data[<span class="string">"name"</span>] == <span class="string">"Andrey"</span></div>
+                    <div class="step-code"><span class="cmd">uv run pytest -v</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 6 ==================== -->
+<div class="phase" data-phase="6">
+    <div class="phase-header">
+        <div class="phase-num">6</div>
+        <div class="phase-title">
+            <h2>Docker и деплой</h2>
+            <p>Dockerfile, compose, CI/CD, VPS</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="docker">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай Dockerfile для приложения <span class="tag docker">Docker</span></div>
+                    <div class="step-code"><span class="keyword">FROM</span> python:3.13-slim
+
+<span class="keyword">WORKDIR</span> /app
+
+<span class="keyword">COPY</span> --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
+<span class="keyword">COPY</span> pyproject.toml uv.lock ./
+<span class="keyword">RUN</span> uv sync --frozen --no-dev
+
+<span class="keyword">COPY</span> . .
+
+<span class="keyword">ENV</span> PATH=<span class="string">"/app/.venv/bin:$PATH"</span>
+<span class="keyword">EXPOSE</span> 8000
+
+<span class="keyword">CMD</span> [<span class="string">"uvicorn"</span>, <span class="string">"app.main:app"</span>, <span class="string">"--host"</span>, <span class="string">"0.0.0.0"</span>, <span class="string">"--port"</span>, <span class="string">"8000"</span>]</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="docker">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Добавь app в docker-compose.yml <span class="tag docker">Docker</span></div>
+                    <div class="step-code">  app:
+    build: .
+    container_name: project_manager_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - <span class="string">"8000:8000"</span>
+    environment:
+      POSTGRES_HOST: db              <span class="comment"># имя сервиса, не localhost!</span>
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}</div>
+                    <div class="step-why">
+                        <strong>Почему <code>db</code> а не <code>localhost</code>:</strong> внутри Docker-сети контейнеры общаются по именам сервисов.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="docker">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Создай .dockerignore <span class="tag docker">Docker</span></div>
+                    <div class="step-code"><span class="string">.venv/</span>
+<span class="string">__pycache__/</span>
+<span class="string">*.pyc</span>
+<span class="string">.git/</span>
+<span class="string">.env</span>
+<span class="string">.idea/</span>
+<span class="string">.vscode/</span>
+<span class="string">tests/</span>
+<span class="string">*.md</span></div>
+                    <div class="step-why">
+                        <strong>Почему:</strong> без .dockerignore Docker отправит весь проект в контекст сборки — медленно, много.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="docker deploy">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Настрой CI/CD (GitHub Actions) <span class="tag deploy">Деплой</span></div>
+                    <div class="step-code"><span class="comment"># .github/workflows/ci.yml</span>
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run pytest</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="deploy">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Задеплой на VPS <span class="tag deploy">Деплой</span></div>
+                    <div class="step-desc">VPS — Hetzner CX22 (€4/мес), DigitalOcean, Timeweb. <strong>Nginx</strong> + <strong>Docker Compose</strong> + <strong>Let's Encrypt</strong>.</div>
+                    <div class="step-code"><span class="comment"># на VPS</span>
+<span class="cmd">ssh user@your-vps-ip</span>
+<span class="cmd">git clone git@github.com:username/project_manager.git</span>
+<span class="cmd">cd project_manager</span>
+<span class="cmd">docker compose up -d --build</span>
+
+<span class="comment"># Nginx reverse proxy + SSL через certbot</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ==================== PHASE 7 ==================== -->
+<div class="phase" data-phase="7">
+    <div class="phase-header">
+        <div class="phase-num">7</div>
+        <div class="phase-title">
+            <h2>Развитие и поддержка</h2>
+            <p>Мониторинг, оптимизация, масштабирование</p>
+        </div>
+        <div class="phase-toggle">⌄</div>
+    </div>
+    <div class="phase-body">
+        <div class="phase-body-inner">
+
+            <div class="step" data-tags="deploy">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Добавь мониторинг (Prometheus + Grafana) <span class="tag deploy">Деплой</span></div>
+                    <div class="step-desc">Когда пользователи жалуются на медленность. <strong>Prometheus</strong> собирает метрики, <strong>Grafana</strong> строит графики.</div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="db">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Оптимизация SQL <span class="tag db">БД</span></div>
+                    <div class="step-desc">
+                        <code>EXPLAIN ANALYZE</code> → full scan? Добавь индекс.<br>
+                        N+1 запрос? <code>selectinload</code>.<br>
+                        Тяжёлый отчёт? Кеш в Redis / фоновая задача в Celery.
+                    </div>
+                </div>
+            </div>
+
+            <div class="step" data-tags="arch">
+                <div class="step-check" onclick="toggleCheck(this)"></div>
+                <div class="step-body">
+                    <div class="step-title">Масштабирование <span class="tag arch">Архитектура</span></div>
+                    <div class="step-desc">По шагам:</div>
+                    <ol style="padding-left: 20px; color: var(--text-dim); font-size: 14px; line-height: 1.8;">
+                        <li>Оптимизация SQL</li>
+                        <li>Redis-кеш</li>
+                        <li>PgBouncer (пул соединений)</li>
+                        <li>Read-replica для Postgres</li>
+                        <li>Несколько инстансов приложения + Nginx</li>
+                        <li>CDN для статики</li>
+                        <li>Kubernetes — если реально нужен</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</main>
+
+<footer>
+    <strong>Backend Roadmap</strong> — шпаргалка по запуску проекта с нуля<br>
+    Прогресс сохраняется в браузере. Работает оффлайн. <br>
+    <span style="opacity: 0.5;">Сделано для Андрея. Удачи.</span>
+</footer>
+
+<script>
+// ==================== STATE ====================
+const STORAGE_KEY = 'backend_roadmap_progress';
+
+function loadState() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch {
+        return {};
+    }
+}
+
+function saveState(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+let state = loadState();
+
+// ==================== ACCORDION ====================
+document.querySelectorAll('.phase-header').forEach(header => {
+    header.addEventListener('click', () => {
+        const phase = header.parentElement;
+        phase.classList.toggle('open');
+    });
+});
+
+// Открыть первый phase по умолчанию
+document.querySelector('.phase')?.classList.add('open');
+
+// ==================== CHECKBOXES ====================
+function toggleCheck(el) {
+    el.classList.toggle('checked');
+    const step = el.closest('.step');
+    step.classList.toggle('done');
+
+    const stepId = getStepId(step);
+    if (stepId) {
+        state[stepId] = el.classList.contains('checked');
+        saveState(state);
+    }
+    updateProgress();
+}
+
+function getStepId(step) {
+    // Уникальный ID шага на основе текста заголовка
+    const title = step.querySelector('.step-title')?.textContent.trim();
+    if (!title) return null;
+    return 'step_' + title.slice(0, 60).replace(/[^a-zA-Zа-яА-Я0-9]/g, '_');
+}
+
+// Восстановить состояние чек-боксов
+document.querySelectorAll('.step').forEach(step => {
+    const stepId = getStepId(step);
+    if (stepId && state[stepId]) {
+        step.querySelector('.step-check')?.classList.add('checked');
+        step.classList.add('done');
+    }
+});
+
+// ==================== PROGRESS ====================
+function updateProgress() {
+    const total = document.querySelectorAll('.step-check').length;
+    const done = document.querySelectorAll('.step-check.checked').length;
+    const pct = total ? (done / total) * 100 : 0;
+
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent = `${done} / ${total}`;
+}
+
+updateProgress();
+
+// ==================== SEARCH ====================
+document.getElementById('searchBox').addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase().trim();
+    document.querySelectorAll('.step').forEach(step => {
+        const text = step.textContent.toLowerCase();
+        step.classList.toggle('hidden', query && !text.includes(query));
+    });
+});
+
+// ==================== FILTER ====================
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.step').forEach(step => {
+            if (filter === 'all') {
+                step.classList.remove('hidden');
+                return;
+            }
+            const tags = step.dataset.tags || '';
+            step.classList.toggle('hidden', !tags.includes(filter));
+        });
+
+        // Открыть все phases при фильтрации
+        if (filter !== 'all') {
+            document.querySelectorAll('.phase').forEach(p => p.classList.add('open'));
+        }
+    });
+});
+
+// ==================== KEYBOARD ====================
+document.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== document.getElementById('searchBox')) {
+        e.preventDefault();
+        document.getElementById('searchBox').focus();
+    }
+    if (e.key === 'Escape') {
+        document.getElementById('searchBox').blur();
+        document.getElementById('searchBox').value = '';
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('hidden'));
+    }
+});
+
+// ==================== RESET PROGRESS ====================
+// Скрытая функция: в консоли набери resetProgress() чтобы сбросить
+window.resetProgress = function() {
+    localStorage.removeItem(STORAGE_KEY);
+    state = {};
+    document.querySelectorAll('.step-check').forEach(el => el.classList.remove('checked'));
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('done'));
+    updateProgress();
+    console.log('✅ Прогресс сброшен');
+};
+</script>
+
+</body>
+</html>

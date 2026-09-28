@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERP для перевозок — Как было и как стало</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #f0f4f8;
+        color: #1a2634;
+        line-height: 1.6;
+        padding: 40px 20px;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; }
+
+    .hero {
+        background: linear-gradient(135deg, #0b1a2b 0%, #1e3a8a 50%, #2563eb 100%);
+        color: white;
+        padding: 70px 50px;
+        border-radius: 28px;
+        margin-bottom: 32px;
+        box-shadow: 0 24px 80px rgba(30, 58, 138, 0.35);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: -50%; right: -20%;
+        width: 600px; height: 600px;
+        background: radial-gradient(circle, rgba(96, 165, 250, 0.25), transparent 70%);
+        border-radius: 50%;
+    }
+
+    .hero h1 {
+        font-size: 46px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        letter-spacing: -1.5px;
+        position: relative;
+    }
+
+    .hero p {
+        font-size: 18px;
+        opacity: 0.95;
+        max-width: 720px;
+        position: relative;
+    }
+
+    .hero .badges { margin-top: 24px; position: relative; }
+
+    .badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+        padding: 8px 18px;
+        border-radius: 24px;
+        font-size: 13px;
+        margin-right: 10px;
+        margin-bottom: 8px;
+        font-weight: 600;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    section {
+        background: white;
+        border-radius: 24px;
+        padding: 44px;
+        margin-bottom: 28px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    section h2 {
+        font-size: 30px;
+        color: #0b1a2b;
+        margin-bottom: 28px;
+        padding-bottom: 14px;
+        border-bottom: 3px solid #2563eb;
+        display: inline-block;
+        letter-spacing: -0.5px;
+    }
+
+    section h3 {
+        font-size: 20px;
+        color: #1e3a8a;
+        margin-top: 32px;
+        margin-bottom: 16px;
+    }
+
+    section h4 {
+        font-size: 17px;
+        color: #0b1a2b;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .compare {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin: 24px 0;
+    }
+
+    .compare-card {
+        border-radius: 18px;
+        padding: 28px;
+        position: relative;
+    }
+
+    .compare-card.before {
+        background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        border: 2px solid #fca5a5;
+    }
+
+    .compare-card.after {
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border: 2px solid #86efac;
+    }
+
+    .compare-card .label {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 12px;
+        letter-spacing: 1px;
+        margin-bottom: 14px;
+        text-transform: uppercase;
+    }
+
+    .compare-card.before .label { background: #dc2626; color: white; }
+    .compare-card.after .label { background: #16a34a; color: white; }
+
+    .compare-card h3 { margin-top: 0; font-size: 19px; color: #0b1a2b; }
+    .compare-card ul { margin-left: 18px; margin-top: 12px; }
+    .compare-card li { font-size: 14px; margin-bottom: 8px; }
+
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
+    }
+
+    .kpi {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 22px;
+        text-align: center;
+        transition: all 0.3s;
+    }
+
+    .kpi:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(37, 99, 235, 0.12);
+        border-color: #93c5fd;
+    }
+
+    .kpi .label {
+        font-size: 11px;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin-bottom: 8px;
+        font-weight: 700;
+    }
+
+    .kpi .value { font-size: 26px; font-weight: 800; color: #0b1a2b; }
+    .kpi .value.blue { color: #2563eb; }
+    .kpi .value.green { color: #16a34a; }
+    .kpi .value.red { color: #dc2626; }
+    .kpi .value.orange { color: #ea580c; }
+    .kpi .value.purple { color: #7c3aed; }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 13px;
+    }
+
+    th {
+        background: #1e3a8a;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    tr:hover td { background: #f8fafc; }
+
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .money { color: #16a34a; font-weight: 700; }
+    .loss { color: #dc2626; font-weight: 700; }
+    .warn { color: #ea580c; font-weight: 700; }
+
+    tfoot td {
+        background: #f1f5f9;
+        font-weight: 800;
+        border-top: 2px solid #1e3a8a;
+    }
+
+    .flow {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 24px 0;
+    }
+
+    .flow-step {
+        display: flex;
+        gap: 16px;
+        padding: 18px 22px;
+        background: #f8fafc;
+        border-radius: 14px;
+        border-left: 4px solid #2563eb;
+        align-items: flex-start;
+        transition: all 0.2s;
+    }
+
+    .flow-step:hover {
+        background: #f1f5f9;
+        transform: translateX(4px);
+    }
+
+    .flow-step .icon {
+        font-size: 26px;
+        flex-shrink: 0;
+        width: 44px;
+        height: 44px;
+        background: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .flow-step .text { flex: 1; }
+    .flow-step .text strong { color: #0b1a2b; display: block; margin-bottom: 4px; font-size: 15px; }
+    .flow-step .text span { color: #64748b; font-size: 13px; }
+
+    .flow-step .step-num {
+        background: #2563eb;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        flex-shrink: 0;
+        align-self: center;
+    }
+
+    .tg-chat {
+        background: #0e1621;
+        border-radius: 20px;
+        padding: 24px;
+        max-width: 560px;
+        margin: 20px auto;
+    }
+
+    .tg-message {
+        background: #182533;
+        color: #e4e6eb;
+        padding: 12px 16px;
+        border-radius: 14px;
+        margin-bottom: 10px;
+        font-size: 14px;
+        max-width: 90%;
+    }
+
+    .tg-message.bot { background: #182533; }
+    .tg-message.user { background: #2b5278; margin-left: auto; text-align: right; }
+
+    .tg-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+    .tg-btn {
+        background: #2b5278;
+        color: #e4e6eb;
+        padding: 8px 16px;
+        border-radius: 18px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .tg-btn.primary { background: #5288c1; }
+    .tg-btn.success { background: #4dcd5e; color: #0e1621; }
+
+    .stack-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+        margin: 20px 0;
+    }
+
+    .stack-card {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 20px;
+        transition: all 0.25s;
+    }
+
+    .stack-card:hover {
+        border-color: #2563eb;
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(37, 99, 235, 0.1);
+    }
+
+    .stack-card .cat {
+        display: inline-block;
+        font-size: 10px;
+        background: #dbeafe;
+        color: #1e40af;
+        padding: 3px 10px;
+        border-radius: 10px;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+    }
+
+    .stack-card .name {
+        font-size: 17px;
+        font-weight: 700;
+        color: #0b1a2b;
+        margin-bottom: 6px;
+    }
+
+    .stack-card .desc { font-size: 13px; color: #475569; line-height: 1.5; }
+
+    .report-title {
+        background: #0b1a2b;
+        color: white;
+        padding: 14px 22px;
+        border-radius: 12px 12px 0 0;
+        font-weight: 700;
+        font-size: 15px;
+        letter-spacing: 0.5px;
+        margin-top: 24px;
+    }
+
+    .report-block {
+        border: 1px solid #e2e8f0;
+        border-top: none;
+        border-radius: 0 0 12px 12px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .alert {
+        padding: 16px 22px;
+        border-radius: 12px;
+        margin: 16px 0;
+        font-size: 14px;
+        border-left: 4px solid;
+    }
+
+    .alert.info { background: #eff6ff; border-color: #2563eb; color: #1e3a8a; }
+    .alert.warn { background: #fffbeb; border-color: #ea580c; color: #92400e; }
+    .alert.ok { background: #f0fdf4; border-color: #16a34a; color: #14532d; }
+
+    .timeline {
+        display: flex;
+        justify-content: space-between;
+        margin: 32px 0;
+        position: relative;
+    }
+
+    .timeline::before {
+        content: '';
+        position: absolute;
+        top: 24px;
+        left: 5%; right: 5%;
+        height: 2px;
+        background: #e2e8f0;
+        z-index: 0;
+    }
+
+    .timeline-item {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .timeline-item .dot {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: white;
+        border: 3px solid #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+        font-size: 20px;
+    }
+
+    .timeline-item .label { font-size: 12px; color: #64748b; font-weight: 600; }
+    .timeline-item .time { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+    .footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .footer strong { color: #2563eb; }
+
+    @media (max-width: 800px) {
+        .compare { grid-template-columns: 1fr; }
+        .hero h1 { font-size: 30px; }
+        section { padding: 24px; }
+        section h2 { font-size: 22px; }
+        .timeline { flex-direction: column; gap: 16px; }
+        .timeline::before { display: none; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+    <h1>🚛 ERP для бартерных перевозок</h1>
+    <p>Автоматизация учёта рейсов, топлива, бетона и расчёта взаимозачётов с контрагентами. От Telegram-бота для водителей до автоматических отчётов в конце месяца.</p>
+    <div class="badges">
+        <span class="badge">📅 Пример: август 2026</span>
+        <span class="badge">🚛 51 рейс · 3 самосвала</span>
+        <span class="badge">⚡ ~150 часов экономии в год</span>
+    </div>
+</div>
+
+<!-- КАК БЫЛО / КАК СТАЛО -->
+<section>
+    <h2>🔄 Как было и как стало</h2>
+
+    <div class="compare">
+        <div class="compare-card before">
+            <span class="label">❌ Как было (Excel)</span>
+            <h3>3 Excel-файла, ручной учёт</h3>
+            <ul>
+                <li>📄 <strong>Перевозки</strong> — отдельный Excel</li>
+                <li>⛽ <strong>Топливо</strong> — второй Excel</li>
+                <li>🏗️ <strong>Бетон</strong> — третий Excel</li>
+                <li>✍️ Данные от водителей приходят в мессенджер в произвольной форме</li>
+                <li>📸 Фотографии накладных — часто низкого качества</li>
+                <li>🧮 Взаимозачёты с РБУ рассчитываются вручную</li>
+                <li>📊 Отчёты — сводные таблицы раз в месяц</li>
+                <li>⏰ <strong>3 часа в неделю</strong> на учёт</li>
+                <li>🐛 Опечатки и пропущенные рейсы</li>
+            </ul>
+        </div>
+
+        <div class="compare-card after">
+            <span class="label">✅ Как стало (ERP)</span>
+            <h3>1 база данных, автоматизация</h3>
+            <ul>
+                <li>🗄️ <strong>PostgreSQL</strong> — все данные в единой системе</li>
+                <li>📱 <strong>Telegram-бот</strong> для водителей</li>
+                <li>🤖 <strong>OCR</strong> распознаёт накладные</li>
+                <li>📥 <strong>Автоимпорт Excel</strong> от РБУ</li>
+                <li>💰 <strong>Взаимозачёты рассчитываются автоматически</strong></li>
+                <li>📊 <strong>Дашборд</strong> в реальном времени</li>
+                <li>🔔 <strong>Уведомления</strong> об отклонениях</li>
+                <li>⏰ <strong>10 минут в неделю</strong> на учёт</li>
+                <li>✅ Валидация данных на каждом шаге</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="kpi-grid">
+        <div class="kpi">
+            <div class="label">Экономия времени</div>
+            <div class="value green">~150 ч/год</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Снижение ошибок</div>
+            <div class="value green">−90%</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Формирование отчёта</div>
+            <div class="value blue">Мгновенно</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Взаимозачёты</div>
+            <div class="value blue">Real-time</div>
+        </div>
+    </div>
+</section>
+
+<!-- ЦИФРЫ ЗА АВГУСТ -->
+<section>
+    <h2>📊 Показатели за август 2026</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi">
+            <div class="label">Самосвалов</div>
+            <div class="value blue">3</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Рейсов</div>
+            <div class="value blue">51</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Перевезено, тонн</div>
+            <div class="value">1 580</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Объём оказанных услуг</div>
+            <div class="value blue">935 377 ₽</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Получено топлива</div>
+            <div class="value orange">~815 000 ₽</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Получено бетона</div>
+            <div class="value orange">829 036 ₽</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Сальдо с РБУ</div>
+            <div class="value red">−708 659 ₽</div>
+        </div>
+    </div>
+
+    <div class="alert info">
+        <strong>Пояснение:</strong> за август 2026 года объём оказанных услуг составил <strong>935 377 ₽</strong>. Стоимость полученных товаров (топливо + бетон) — <strong>~1 644 036 ₽</strong>. Разница — <strong>−708 659 ₽</strong> — составляет задолженность перед РБУ, которая будет закрыта оказанием услуг в следующих периодах.
+    </div>
+</section>
+
+<!-- КАК РАБОТАЕТ СИСТЕМА -->
+<section>
+    <h2>⚙️ Как работает система</h2>
+
+    <h3>📱 Часть 1: Приём данных от водителя через Telegram-бот</h3>
+
+    <div class="tg-chat">
+        <div class="tg-message bot">
+            🤖 Добрый день, Иванов! Выберите действие:
+            <div class="tg-buttons">
+                <span class="tg-btn primary">🚛 Новый рейс</span>
+                <span class="tg-btn">📋 История</span>
+                <span class="tg-btn">💰 Зарплата</span>
+            </div>
+        </div>
+
+        <div class="tg-message user">🚛 Новый рейс</div>
+
+        <div class="tg-message bot">
+            Укажите пункт погрузки:
+            <div class="tg-buttons">
+                <span class="tg-btn">г. Ялта, ЮБШ, 45 (база)</span>
+                <span class="tg-btn">г. Ялта, пгт Кипарисное, Шархинский карьер</span>
+                <span class="tg-btn">г. Севастополь, Балаклава, ЮгПромСырье</span>
+            </div>
+        </div>
+
+        <div class="tg-message user">г. Ялта, пгт Кипарисное, Шархинский карьер</div>
+
+        <div class="tg-message bot">
+            Укажите пункт выгрузки:
+            <div class="tg-buttons">
+                <span class="tg-btn">г. Ялта, ЮБШ, 45 (база)</span>
+                <span class="tg-btn">г. Ялта, Дарсановская ул., 15</span>
+                <span class="tg-btn">г. Алушта, Симферопольское шоссе, 4 км</span>
+                <span class="tg-btn">г. Севастополь, Балаклава, ЮгПромСырье</span>
+            </div>
+        </div>
+
+        <div class="tg-message user">г. Ялта, ЮБШ, 45 (база)</div>
+
+        <div class="tg-message bot">
+            Выберите груз:
+            <div class="tg-buttons">
+                <span class="tg-btn">Щебень 5-25</span>
+                <span class="tg-btn">Щебень 20-40</span>
+                <span class="tg-btn">Песок</span>
+            </div>
+        </div>
+
+        <div class="tg-message user">Щебень 5-25</div>
+
+        <div class="tg-message bot">
+            Укажите массу груза в тоннах <em>(или прикрепите фото накладной)</em>:
+        </div>
+
+        <div class="tg-message user">31.5</div>
+
+        <div class="tg-message bot">
+            📸 Прикрепите фото накладной:
+            <div class="tg-buttons">
+                <span class="tg-btn">⏭️ Пропустить</span>
+            </div>
+        </div>
+
+        <div class="tg-message user">📷 [фото]</div>
+
+        <div class="tg-message bot">
+            🤖 Распознано:<br>
+            • Масса: <strong>31.5 т</strong><br>
+            • Маршрут: Шархинский карьер → ЮБШ, 45<br>
+            • Груз: Щебень 5-25<br><br>
+            Подтвердите корректность данных:
+            <div class="tg-buttons">
+                <span class="tg-btn success">✅ Подтвердить</span>
+                <span class="tg-btn">✏️ Изменить</span>
+            </div>
+        </div>
+
+        <div class="tg-message user">✅ Подтвердить</div>
+
+        <div class="tg-message bot">
+            ✅ <strong>Рейс №1869 зарегистрирован.</strong><br><br>
+            💰 Начислено за рейс: <strong>2 148,15 ₽</strong><br><br>
+            🔔 Менеджер получит уведомление для проверки.
+        </div>
+    </div>
+
+    <div class="alert ok">
+        <strong>Что произошло автоматически:</strong>
+        <ul style="margin-top: 8px; margin-left: 20px;">
+            <li>Данные прошли валидацию (Pydantic)</li>
+            <li>OCR распознал массу груза с фотографии накладной</li>
+            <li>Маршрут определён по справочнику → подтянулась цена за тонну</li>
+            <li>Стоимость рейса: 31.5 × 570 = 17 955 ₽</li>
+            <li>Зарплата водителя: (17 955 − 6 160) × 0.13 + 1 200 = 2 148 ₽</li>
+            <li>Запись сохранена в PostgreSQL</li>
+            <li>Менеджеру направлено уведомление в Telegram</li>
+        </ul>
+    </div>
+
+    <h3>📥 Часть 2: Автоматический импорт Excel от РБУ</h3>
+
+    <div class="flow">
+        <div class="flow-step">
+            <div class="step-num">1</div>
+            <div class="text">
+                <strong>РБУ направляет Excel на корпоративный email</strong>
+                <span>Например, на barter@company.ru — файлы «Топливо_август.xlsx» и «Бетон_август.xlsx»</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">2</div>
+            <div class="text">
+                <strong>Система проверяет почту каждые 5 минут</strong>
+                <span>Через IMAP: обнаруживает письмо, скачивает вложение</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">3</div>
+            <div class="text">
+                <strong>pandas парсит Excel</strong>
+                <span>Читает листы «Топливо» и «Бетон», извлекает данные</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">4</div>
+            <div class="text">
+                <strong>Валидация каждой строки</strong>
+                <span>Проверяются дата, машина, объём, цена</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">5</div>
+            <div class="text">
+                <strong>Защита от дублей</strong>
+                <span>Повторный импорт того же файла не создаёт дубликаты</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">6</div>
+            <div class="text">
+                <strong>Сохранение в PostgreSQL</strong>
+                <span>SQLAlchemy записывает данные в таблицу barter_operations</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">7</div>
+            <div class="text">
+                <strong>Пересчёт остатков и взаимозачётов</strong>
+                <span>Остатки ТМЦ и баланс с РБУ обновляются автоматически</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="step-num">8</div>
+            <div class="text">
+                <strong>Уведомление менеджеру в Telegram</strong>
+                <span>«Импортировано 38 записей топлива. Сальдо с РБУ: −708 659 ₽»</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert ok">
+        <strong>⏱️ Время импорта:</strong> 30 секунд вместо 30 минут ручного ввода. Экономия — 2–3 часа ежемесячно.
+    </div>
+
+    <h3>📊 Часть 3: Автоматические отчёты в конце месяца</h3>
+
+    <p>1-го числа каждого месяца система автоматически формирует <strong>5 отчётов</strong> и направляет их в Telegram, на email и в архив:</p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="dot">📊</div>
+            <div class="label">Общий отчёт</div>
+            <div class="time">Прибыль за месяц</div>
+        </div>
+        <div class="timeline-item">
+            <div class="dot">💰</div>
+            <div class="label">Взаимозачёты</div>
+            <div class="time">Сальдо с контрагентами</div>
+        </div>
+        <div class="timeline-item">
+            <div class="dot">👤</div>
+            <div class="label">Водители</div>
+            <div class="time">Зарплаты и KPI</div>
+        </div>
+        <div class="timeline-item">
+            <div class="dot">🚛</div>
+            <div class="label">Парк техники</div>
+            <div class="time">Самосвалы</div>
+        </div>
+        <div class="timeline-item">
+            <div class="dot">📈</div>
+            <div class="label">Детализация</div>
+            <div class="time">Рейсы и бартер</div>
+        </div>
+    </div>
+</section>
+
+<!-- ОТЧЁТЫ -->
+<section>
+    <h2>📋 Автоматические отчёты</h2>
+
+    <!-- ОТЧЁТ 1 -->
+    <div class="report-title">📊 Отчёт 1. Общий отчёт за месяц</div>
+    <div class="report-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>Показатель</th>
+                    <th class="num">Значение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Оказано услуг</strong></td><td class="num">—</td></tr>
+                <tr><td>Количество рейсов</td><td class="num">51</td></tr>
+                <tr><td>Перевезено, тонн</td><td class="num">1 580</td></tr>
+                <tr><td>Объём оказанных услуг</td><td class="num money">935 377 ₽</td></tr>
+                <tr><td colspan="2" style="background:#f1f5f9;"></td></tr>
+                <tr><td><strong>Получено в счёт услуг</strong></td><td class="num">—</td></tr>
+                <tr><td>Топливо (ДТ)</td><td class="num warn">815 000 ₽</td></tr>
+                <tr><td>Бетон и сопутствующие услуги</td><td class="num warn">829 036 ₽</td></tr>
+                <tr><td>Всего получено</td><td class="num warn">1 644 036 ₽</td></tr>
+                <tr><td colspan="2" style="background:#f1f5f9;"></td></tr>
+                <tr><td><strong>Взаимозачёты</strong></td><td class="num">—</td></tr>
+                <tr><td>Сальдо с РБУ</td><td class="num loss">−708 659 ₽</td></tr>
+                <tr><td>Отработать услугами (рейсов)</td><td class="num">~45</td></tr>
+                <tr><td colspan="2" style="background:#f1f5f9;"></td></tr>
+                <tr><td><strong>Финансовый результат</strong></td><td class="num">—</td></tr>
+                <tr><td>Валовая прибыль (услуги − расходы)</td><td class="num money">368 744 ₽</td></tr>
+                <tr><td>Рентабельность</td><td class="num">39,4%</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ОТЧЁТ 2 -->
+    <div class="report-title">💰 Отчёт 2. Взаимозачёты с контрагентами (бартер)</div>
+    <div class="report-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>Контрагент</th>
+                    <th class="num">Оказано услуг</th>
+                    <th class="num">Получено товаров</th>
+                    <th class="num">Сальдо</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>РБУ</strong></td>
+                    <td class="num">935 377 ₽</td>
+                    <td class="num">1 644 036 ₽</td>
+                    <td class="num loss">−708 659 ₽</td>
+                    <td><span style="color:#dc2626; font-weight:700;">Мы должны</span></td>
+                </tr>
+                <tr>
+                    <td><strong>Заправка №1</strong></td>
+                    <td class="num">132 000 ₽</td>
+                    <td class="num">115 000 ₽</td>
+                    <td class="num money">+17 000 ₽</td>
+                    <td><span style="color:#16a34a; font-weight:700;">Должны нам</span></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>ИТОГО</td>
+                    <td class="num">1 067 377 ₽</td>
+                    <td class="num">1 759 036 ₽</td>
+                    <td class="num loss">−691 659 ₽</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th colspan="5" style="background:#334155;">Остатки ТМЦ на 31.08.2026</th>
+                </tr>
+                <tr>
+                    <th>Позиция</th>
+                    <th class="num">Количество</th>
+                    <th class="num">Цена, ₽</th>
+                    <th class="num">Стоимость, ₽</th>
+                    <th>Ед. изм.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Дизельное топливо</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>л</td></tr>
+                <tr><td>Бетон М300</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>м³</td></tr>
+                <tr><td>Щебень 5-25</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td>т</td></tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">ИТОГО стоимость ТМЦ</td>
+                    <td class="num money">— ₽</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <p style="padding: 12px 20px; color: #64748b; font-size: 13px; font-style: italic;">
+            ТМЦ — товарно-материальные ценности (топливо, бетон, инертные материалы, находящиеся в распоряжении компании).
+        </p>
+    </div>
+
+    <!-- ОТЧЁТ 3 -->
+    <div class="report-title">👤 Отчёт 3. Водители и фонд оплаты труда</div>
+    <div class="report-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>Водитель</th>
+                    <th class="num">Рейсов</th>
+                    <th class="num">Тонн</th>
+                    <th class="num">Объём услуг, ₽</th>
+                    <th class="num">Оклад, ₽</th>
+                    <th class="num">Процент (13%), ₽</th>
+                    <th class="num">К выплате, ₽</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Иванов И.И.</td>
+                    <td class="num">14</td>
+                    <td class="num">442</td>
+                    <td class="num">265 780</td>
+                    <td class="num">16 800</td>
+                    <td class="num">—</td>
+                    <td class="num money">—</td>
+                </tr>
+                <tr>
+                    <td>Петров П.П.</td>
+                    <td class="num">12</td>
+                    <td class="num">380</td>
+                    <td class="num">215 440</td>
+                    <td class="num">14 400</td>
+                    <td class="num">—</td>
+                    <td class="num money">—</td>
+                </tr>
+                <tr>
+                    <td>Сидоров С.С.</td>
+                    <td class="num">13</td>
+                    <td class="num">410</td>
+                    <td class="num">245 660</td>
+                    <td class="num">15 600</td>
+                    <td class="num">—</td>
+                    <td class="num money">—</td>
+                </tr>
+                <tr>
+                    <td colspan="7" style="background:#f8fafc; font-size:12px; color:#64748b; font-style:italic;">
+                        Остальные водители — данные приведены в полном отчёте
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>ИТОГО</td>
+                    <td class="num">51</td>
+                    <td class="num">1 580</td>
+                    <td class="num">935 377</td>
+                    <td class="num">—</td>
+                    <td class="num">—</td>
+                    <td class="num money">91 334 ₽</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th colspan="4" style="background:#334155;">Рейтинг водителей по эффективности (₽ выручки на 1 км)</th>
+                </tr>
+                <tr>
+                    <th>Место</th>
+                    <th>Водитель</th>
+                    <th class="num">Показатель</th>
+                    <th>Примечание</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>🥇 1</td><td>Иванов И.И.</td><td class="num">82 ₽/км</td><td>Лидер месяца</td></tr>
+                <tr><td>🥈 2</td><td>Сидоров С.С.</td><td class="num">78 ₽/км</td><td>Стабильно высокий</td></tr>
+                <tr><td>🥉 3</td><td>Петров П.П.</td><td class="num">74 ₽/км</td><td>Средний уровень</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ОТЧЁТ 4 (НОВЫЙ) -->
+    <div class="report-title">🚛 Отчёт 4. Парк техники (самосвалы)</div>
+    <div class="report-block">
+        <table>
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Гос. номер</th>
+                    <th>Модель</th>
+                    <th class="num">Рейсов</th>
+                    <th class="num">Тонн</th>
+                    <th class="num">Объём услуг, ₽</th>
+                    <th class="num">ГСМ, ₽</th>
+                    <th class="num">Амортизация, ₽</th>
+                    <th class="num">Прибыль, ₽</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>о957ау</td>
+                    <td>Самосвал</td>
+                    <td class="num">17</td>
+                    <td class="num">525</td>
+                    <td class="num">310 000</td>
+                    <td class="num">~130 000</td>
+                    <td class="num">~22 000</td>
+                    <td class="num money">~122 000</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>е359хо</td>
+                    <td>Самосвал</td>
+                    <td class="num">18</td>
+                    <td class="num">560</td>
+                    <td class="num">330 000</td>
+                    <td class="num">~140 000</td>
+                    <td class="num">~23 000</td>
+                    <td class="num money">~128 000</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>е603</td>
+                    <td>Самосвал</td>
+                    <td class="num">16</td>
+                    <td class="num">495</td>
+                    <td class="num">295 377</td>
+                    <td class="num">~138 000</td>
+                    <td class="num">~22 000</td>
+                    <td class="num money">~118 744</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3">ИТОГО ЗА АВГУСТ</td>
+                    <td class="num">51</td>
+                    <td class="num">1 580</td>
+                    <td class="num">935 377</td>
+                    <td class="num">~408 000</td>
+                    <td class="num">~67 000</td>
+                    <td class="num money">~368 744</td>
+                </tr>
+            </tfoot>
+        </table>
+        <p style="padding: 12px 20px; color: #64748b; font-size: 13px; font-style: italic;">
+            В отчёте указаны только самосвалы. Легковой транспорт и другие машины учтены в отдельном отчёте.
+        </p>
+    </div>
+
+    <!-- ОТЧЁТ 5 -->
+    <div class="report-title">📈 Отчёт 5. Детализация по рейсам и бартерным операциям</div>
+    <div class="report-block">
+        <h4 style="padding: 14px 20px; background: #f1f5f9; margin: 0;">5.1. Рейсы за август 2026</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>№ рейса</th>
+                    <th>Водитель</th>
+                    <th>Маршрут</th>
+                    <th>Груз</th>
+                    <th class="num">Тонн</th>
+                    <th class="num">Стоимость, ₽</th>
+                    <th class="num">Зарплата, ₽</th>
+                    <th class="num">Прибыль, ₽</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>03.08</td><td>1818</td><td>Иванов</td>
+                    <td>РБУ → Карьер → Алушта</td><td>Щебень</td>
+                    <td class="num">27,5</td><td class="num">12 100</td>
+                    <td class="num">2 187</td><td class="num money">4 788</td>
+                </tr>
+                <tr>
+                    <td>03.08</td><td>1819</td><td>Петров</td>
+                    <td>Карьер → Дарсановская</td><td>Щебень</td>
+                    <td class="num">31,7</td><td class="num">18 069</td>
+                    <td class="num">1 734</td><td class="num money">10 960</td>
+                </tr>
+                <tr>
+                    <td>03.08</td><td>1820</td><td>Сидоров</td>
+                    <td>Карьер → РБУ</td><td>Щебень</td>
+                    <td class="num">31,6</td><td class="num">18 012</td>
+                    <td class="num">1 441</td><td class="num money">8 696</td>
+                </tr>
+                <tr>
+                    <td>05.08</td><td>1825</td><td>Иванов</td>
+                    <td>РБУ → Балаклава</td><td>Щебень</td>
+                    <td class="num">32,4</td><td class="num">25 596</td>
+                    <td class="num">2 111</td><td class="num money">2 360</td>
+                </tr>
+                <tr>
+                    <td>11.08</td><td>1836</td><td>Петров</td>
+                    <td>РБУ → Балаклава</td><td>Щебень</td>
+                    <td class="num">32,4</td><td class="num">34 020</td>
+                    <td class="num">3 689</td><td class="num money">12 924</td>
+                </tr>
+                <tr>
+                    <td colspan="9" style="background:#f8fafc; text-align:center; color:#64748b; font-style:italic;">
+                        … всего 51 рейс (полный список в отчёте)
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">ИТОГО ЗА АВГУСТ</td>
+                    <td class="num">1 580</td>
+                    <td class="num">935 377</td>
+                    <td class="num">91 335</td>
+                    <td class="num">368 744</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <h4 style="padding: 14px 20px; background: #f1f5f9; margin: 20px 0 0;">5.2. Поступления топлива от РБУ</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Машина</th>
+                    <th class="num">Объём, л</th>
+                    <th class="num">Цена, ₽/л</th>
+                    <th class="num">Сумма, ₽</th>
+                    <th>Место</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>03.08</td><td>о957ау</td><td class="num">150</td><td class="num">250,00</td><td class="num">37 500</td><td>Ялта</td></tr>
+                <tr><td>03.08</td><td>е359хо</td><td class="num">150</td><td class="num">250,00</td><td class="num">37 500</td><td>Ялта</td></tr>
+                <tr><td>04.08</td><td>е359хо</td><td class="num">150</td><td class="num">250,00</td><td class="num">37 500</td><td>Ялта</td></tr>
+                <tr><td>05.08</td><td>о957ау</td><td class="num">200</td><td class="num">250,00</td><td class="num">50 000</td><td>Ялта</td></tr>
+                <tr><td>06.08</td><td>е359хо</td><td class="num">200</td><td class="num">160,00</td><td class="num">32 000</td><td>Ялта</td></tr>
+                <tr>
+                    <td colspan="6" style="background:#f8fafc; text-align:center; color:#64748b; font-style:italic;">
+                        … всего 38 записей (полный список в отчёте)
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2">ИТОГО</td>
+                    <td class="num">~5 455</td>
+                    <td class="num">—</td>
+                    <td class="num">~815 000</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <h4 style="padding: 14px 20px; background: #f1f5f9; margin: 20px 0 0;">5.3. Поступления бетона и сопутствующих услуг от РБУ</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Позиция</th>
+                    <th>Ед. изм.</th>
+                    <th class="num">Кол-во</th>
+                    <th class="num">Цена, ₽</th>
+                    <th class="num">Сумма, ₽</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>11.08</td><td>БСТ В22,5 П4 (М300)</td><td>м³</td><td class="num">17,0</td><td class="num">8 800</td><td class="num">149 600</td></tr>
+                <tr><td>11.08</td><td>Доставка (рейс)</td><td>рейс</td><td class="num">3</td><td class="num">7 200</td><td class="num">21 600</td></tr>
+                <tr><td>15.08</td><td>БСТ В22,5 П4 (М300)</td><td>м³</td><td class="num">15,0</td><td class="num">8 800</td><td class="num">132 000</td></tr>
+                <tr><td>15.08</td><td>Доставка (рейс)</td><td>рейс</td><td class="num">3</td><td class="num">7 200</td><td class="num">21 600</td></tr>
+                <tr><td>15.08</td><td>Услуги АБН, 26 м</td><td>услуга</td><td class="num">3</td><td class="num">12 000</td><td class="num">36 000</td></tr>
+                <tr><td>18.08</td><td>Щебень гранитный фр. 20-40 мм (перепродажа)</td><td>т</td><td class="num">30,1</td><td class="num">1 161</td><td class="num">34 946</td></tr>
+                <tr><td>20.08</td><td>БСТ В10 П4 (М150)</td><td>м³</td><td class="num">9,5</td><td class="num">8 300</td><td class="num">78 850</td></tr>
+                <tr><td>20.08</td><td>Доставка</td><td>м³</td><td class="num">9,5</td><td class="num">1 200</td><td class="num">11 400</td></tr>
+                <tr><td>20.08</td><td>Услуги АБН, 26 м</td><td>услуга</td><td class="num">3</td><td class="num">12 000</td><td class="num">36 000</td></tr>
+                <tr><td>27.08</td><td>БСТ В22,5 П4 (М300)</td><td>м³</td><td class="num">26,8</td><td class="num">8 800</td><td class="num">235 840</td></tr>
+                <tr><td>27.08</td><td>Доставка</td><td>м³</td><td class="num">25,0</td><td class="num">1 200</td><td class="num">30 000</td></tr>
+                <tr><td>27.08</td><td>Доставка (рейс)</td><td>рейс</td><td class="num">1</td><td class="num">7 200</td><td class="num">7 200</td></tr>
+                <tr><td>27.08</td><td>Услуги АБН, 26 м</td><td>услуга</td><td class="num">3</td><td class="num">12 000</td><td class="num">36 000</td></tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">ИТОГО</td>
+                    <td class="num">829 036</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</section>
+
+<!-- СТЕК ТЕХНОЛОГИЙ -->
+<section>
+    <h2>🛠️ Стек технологий</h2>
+
+    <h3>Backend и API</h3>
+    <div class="stack-grid">
+        <div class="stack-card">
+            <span class="cat">Backend</span>
+            <div class="name">FastAPI</div>
+            <div class="desc">Асинхронный веб-фреймворк. Обрабатывает запросы от бота, панели и парсера.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Валидация</span>
+            <div class="name">Pydantic</div>
+            <div class="desc">Проверяет данные на входе. Не допускает сохранения некорректных значений.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">ORM</span>
+            <div class="name">SQLAlchemy 2.0</div>
+            <div class="desc">Работа с PostgreSQL через Python-классы. Вместо SQL — модели и объекты.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Миграции</span>
+            <div class="name">Alembic</div>
+            <div class="desc">Версионирование схемы БД. Изменение модели → миграция → применение.</div>
+        </div>
+    </div>
+
+    <h3>Хранилища</h3>
+    <div class="stack-grid">
+        <div class="stack-card">
+            <span class="cat">Основная БД</span>
+            <div class="name">PostgreSQL 16</div>
+            <div class="desc">Справочники, рейсы, бартер, остатки. Транзакции, индексы, аналитика.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Кеш / Очереди</span>
+            <div class="name">Redis</div>
+            <div class="desc">Кеш запросов и брокер для Celery. Хранение в памяти, микросекунды.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Файлы</span>
+            <div class="name">S3 / MinIO</div>
+            <div class="desc">Хранение фотографий накладных и Excel-файлов. Локально — MinIO.</div>
+        </div>
+    </div>
+
+    <h3>Telegram-бот и парсинг</h3>
+    <div class="stack-grid">
+        <div class="stack-card">
+            <span class="cat">Bot Framework</span>
+            <div class="name">aiogram 3.x</div>
+            <div class="desc">Асинхронный фреймворк. Кнопки, состояния (FSM), приём фото, диалоги.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Парсинг Excel</span>
+            <div class="name">pandas + openpyxl</div>
+            <div class="desc">Чтение файлов от РБУ. Извлечение строк, очистка, загрузка в БД.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Email-парсинг</span>
+            <div class="name">imaplib + schedule</div>
+            <div class="desc">Проверка почты каждые 5 минут. Скачивание вложений, импорт.</div>
+        </div>
+    </div>
+
+    <h3>OCR и обработка</h3>
+    <div class="stack-grid">
+        <div class="stack-card">
+            <span class="cat">OCR</span>
+            <div class="name">Tesseract</div>
+            <div class="desc">Распознавание текста с фотографий накладных. Бесплатный, локальный.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Обработка</span>
+            <div class="name">OpenCV / Pillow</div>
+            <div class="desc">Препроцессинг: выравнивание, контраст, удаление шума.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Фон. задачи</span>
+            <div class="name">Celery</div>
+            <div class="desc">Асинхронные задачи: OCR, отчёты, email-рассылки. Не блокирует API.</div>
+        </div>
+    </div>
+
+    <h3>UI и отчёты</h3>
+    <div class="stack-grid">
+        <div class="stack-card">
+            <span class="cat">MVP UI</span>
+            <div class="name">Streamlit</div>
+            <div class="desc">Дашборд и панель управления на Python. Без HTML/CSS/JS.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Экспорт</span>
+            <div class="name">openpyxl / ReportLab</div>
+            <div class="desc">Формирование Excel и PDF отчётов в конце месяца.</div>
+        </div>
+    </div>
+
+    <h3>Инфраструктура</h3>
+    <div class="stack-grid">
+        <div class="stack-card">
+            <span class="cat">Контейнеры</span>
+            <div class="name">Docker + Compose</div>
+            <div class="desc">Один файл поднимает FastAPI + PostgreSQL + Redis + Celery + MinIO.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">CI/CD</span>
+            <div class="name">GitHub Actions</div>
+            <div class="desc">Автотесты и автодеплой при пуше. Зелёный бейджик — показатель качества.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Прокси</span>
+            <div class="name">Nginx</div>
+            <div class="desc">HTTPS, статика, проксирование к FastAPI. Домен и SSL-сертификат.</div>
+        </div>
+        <div class="stack-card">
+            <span class="cat">Сервер</span>
+            <div class="name">Uvicorn + Gunicorn</div>
+            <div class="desc">Продакшн-конфигурация: несколько воркеров, балансировка нагрузки.</div>
+        </div>
+    </div>
+</section>
+
+<!-- ДЕНЬ ИЗ ЖИЗНИ -->
+<section>
+    <h2>🕐 Один рабочий день системы</h2>
+
+    <div class="flow">
+        <div class="flow-step">
+            <div class="icon">🌅</div>
+            <div class="text">
+                <strong>07:30 — Водитель начал смену</strong>
+                <span>Открыл Telegram-бот → выбрал «Новый рейс» → указал маршрут → ввёл массу груза → прикрепил фото накладной. Рейс сохранён в БД.</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">📸</div>
+            <div class="text">
+                <strong>07:31 — OCR распознал накладную</strong>
+                <span>Tesseract извлёк массу груза (31.5 т). Система сверила с введённым вручную значением. Совпало — рейс подтверждён.</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">🔔</div>
+            <div class="text">
+                <strong>07:32 — Менеджеру направлено уведомление</strong>
+                <span>Telegram: «Новый рейс №1869. Водитель: Иванов. Масса: 31.5 т. Требуется проверка.»</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">📊</div>
+            <div class="text">
+                <strong>07:33 — Дашборд обновлён</strong>
+                <span>Streamlit обновил показатели: за сегодня 3 рейса, объём услуг растёт.</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">📥</div>
+            <div class="text">
+                <strong>10:00 — РБУ направил Excel на почту</strong>
+                <span>Система проверяет почту → обнаруживает «Топливо_август.xlsx» → парсит → 38 записей сохранены в БД.</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">💰</div>
+            <div class="text">
+                <strong>10:01 — Взаимозачёты пересчитаны</strong>
+                <span>Система автоматически обновила сальдо с РБУ.</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">🌙</div>
+            <div class="text">
+                <strong>23:00 — Сводка за день</strong>
+                <span>Telegram: «Сегодня 14 рейсов, 442 т, 265 780 ₽. Прибыль: 98 540 ₽. Отклонений нет.»</span>
+            </div>
+        </div>
+
+        <div class="flow-step">
+            <div class="icon">📅</div>
+            <div class="text">
+                <strong>1-е число месяца — автоматические отчёты</strong>
+                <span>5 отчётов (общий, взаимозачёты, водители, парк техники, детализация) → Telegram + email + архив в PDF и Excel.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ЧТО ДАЁТ -->
+<section>
+    <h2>💎 Эффект от внедрения</h2>
+
+    <div class="kpi-grid">
+        <div class="kpi">
+            <div class="label">Экономия времени</div>
+            <div class="value green">150 ч/год</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Снижение ошибок</div>
+            <div class="value green">−90%</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Прозрачность</div>
+            <div class="value blue">Real-time</div>
+        </div>
+        <div class="kpi">
+            <div class="label">Окупаемость</div>
+            <div class="value purple">2 месяца</div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Показатель</th>
+                <th>До внедрения</th>
+                <th>После внедрения</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Время на учёт</td>
+                <td>3 ч/неделю</td>
+                <td class="money">10 мин/неделю</td>
+            </tr>
+            <tr>
+                <td>Источники данных</td>
+                <td>3 Excel-файла</td>
+                <td>Единая база данных</td>
+            </tr>
+            <tr>
+                <td>Взаимозачёты с РБУ</td>
+                <td>Вручную, раз в месяц</td>
+                <td class="money">В реальном времени</td>
+            </tr>
+            <tr>
+                <td>Расчёт заработной платы</td>
+                <td>Формулы в Excel</td>
+                <td class="money">Автоматически</td>
+            </tr>
+            <tr>
+                <td>Импорт Excel от РБУ</td>
+                <td>Вручную, ~30 мин</td>
+                <td class="money">Автоматически, ~30 сек</td>
+            </tr>
+            <tr>
+                <td>Формирование отчётов</td>
+                <td>Сводные таблицы, вручную</td>
+                <td class="money">Автоматически 1-го числа</td>
+            </tr>
+            <tr>
+                <td>Выявление ошибок</td>
+                <td>Постфактум</td>
+                <td class="money">Уведомления в реальном времени</td>
+            </tr>
+            <tr>
+                <td>Прогнозирование</td>
+                <td>Отсутствует</td>
+                <td class="money">На основе исторических данных</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ПЛАН РАЗРАБОТКИ -->
+<section>
+    <h2>🚀 План разработки</h2>
+
+    <div class="compare">
+        <div class="compare-card before" style="background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%); border-color: #93c5fd;">
+            <span class="label" style="background: #2563eb;">ФАЗА 1 · 2–3 недели</span>
+            <h3>Уход от Excel</h3>
+            <ul>
+                <li>Проектирование базы данных</li>
+                <li>Импорт данных из Excel в БД</li>
+                <li>Streamlit-панель управления</li>
+                <li>Автоматический расчёт взаимозачётов</li>
+                <li>Автоматический расчёт заработной платы</li>
+                <li><strong>Отказ от ведения Excel</strong></li>
+            </ul>
+        </div>
+
+        <div class="compare-card after" style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #86efac;">
+            <span class="label" style="background: #16a34a;">ФАЗА 2 · 3–4 недели</span>
+            <h3>Автоматизация ввода</h3>
+            <ul>
+                <li>Telegram-бот для водителей</li>
+                <li>OCR накладных</li>
+                <li>Автоматический парсинг Excel от РБУ</li>
+                <li>Уведомления менеджеру</li>
+                <li>Автоматические отчёты 1-го числа</li>
+                <li><strong>Система работает автономно</strong></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="alert ok">
+        <strong>Результат:</strong> через <strong>6–8 недель</strong> система будет:
+        <ul style="margin-top: 8px; margin-left: 20px;">
+            <li>Автоматически принимать данные от водителей</li>
+            <li>Автоматически импортировать Excel от РБУ</li>
+            <li>Автоматически рассчитывать взаимозачёты и заработную плату</li>
+            <li>Автоматически формировать 5 отчётов каждый месяц</li>
+            <li>Отображать актуальные показатели в дашборде</li>
+        </ul>
+    </div>
+</section>
+
+<div class="footer">
+    <strong>ERP для бартерных перевозок</strong><br>
+    Как было · Как стало · Стек · Отчёты<br>
+    <strong>Август 2026</strong>
+</div>
+
+</div>
+</body>
+</html>

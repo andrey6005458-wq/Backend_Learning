@@ -7,11 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: #f0f4f8;
@@ -22,10 +18,7 @@
             min-height: 100vh;
         }
 
-        .container {
-            max-width: 1140px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1140px; margin: 0 auto; }
 
         .header {
             background: #ffffff;
@@ -48,9 +41,7 @@
             letter-spacing: -0.5px;
         }
 
-        .header h1 .accent {
-            color: #2563eb;
-        }
+        .header h1 .accent { color: #2563eb; }
 
         .header .subtitle {
             font-size: 14px;
@@ -71,9 +62,7 @@
             white-space: nowrap;
         }
 
-        .badge span {
-            color: #2563eb;
-        }
+        .badge span { color: #2563eb; }
 
         .global-progress {
             background: #ffffff;
@@ -95,9 +84,7 @@
             letter-spacing: 0.5px;
         }
 
-        .global-progress .label span:last-child {
-            color: #2563eb;
-        }
+        .global-progress .label span:last-child { color: #2563eb; }
 
         .global-progress .track {
             width: 100%;
@@ -112,7 +99,7 @@
             width: 0%;
             background: linear-gradient(90deg, #2563eb, #7c3aed);
             border-radius: 30px;
-            transition: width 0.6s ease;
+            transition: width 0.4s ease;
         }
 
         .module {
@@ -155,11 +142,10 @@
             padding: 3px 14px;
             border-radius: 30px;
             font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
         }
 
-        .module-body {
-            padding: 6px 24px 18px 24px;
-        }
+        .module-body { padding: 6px 24px 18px 24px; }
 
         .topic {
             display: flex;
@@ -175,9 +161,7 @@
             gap: 8px;
         }
 
-        .topic:hover {
-            background: #f5f8fc;
-        }
+        .topic:hover { background: #f5f8fc; }
 
         .topic .left {
             display: flex;
@@ -253,30 +237,24 @@
             border-color: #2563eb;
         }
 
-        .topic.done {
-            border-left-color: #2563eb;
-        }
-
-        .topic.done .name {
-            color: #4a5a6e;
-        }
-
-        .topic.done .name .sub {
-            color: #6a7e92;
-        }
+        .topic.done { border-left-color: #2563eb; }
+        .topic.done .name { color: #4a5a6e; }
+        .topic.done .name .sub { color: #6a7e92; }
 
         .reset-area {
             margin-top: 30px;
             display: flex;
             justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .reset-btn {
+        .btn {
             font-family: 'JetBrains Mono', monospace;
             background: transparent;
             border: 1px solid #dce2ea;
             color: #4a5a6e;
-            padding: 8px 28px;
+            padding: 8px 24px;
             border-radius: 40px;
             font-size: 12px;
             font-weight: 500;
@@ -285,10 +263,16 @@
             letter-spacing: 0.5px;
         }
 
-        .reset-btn:hover {
+        .btn:hover {
             border-color: #2563eb;
             color: #2563eb;
             background: #f0f6ff;
+        }
+
+        .btn.danger:hover {
+            border-color: #dc2626;
+            color: #dc2626;
+            background: #fef2f2;
         }
 
         .footer {
@@ -312,6 +296,28 @@
             border: 1px solid #2563eb30;
             margin-left: 8px;
             font-family: 'JetBrains Mono', monospace;
+        }
+
+        .save-notice {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #0b1a2b;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .save-notice.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @media (max-width: 700px) {
@@ -363,7 +369,10 @@
     <div id="modulesContainer"></div>
 
     <div class="reset-area">
-        <button class="reset-btn" id="resetBtn">⟳ СБРОСИТЬ ПРОГРЕСС</button>
+        <button class="btn" id="exportBtn">💾 Скачать прогресс</button>
+        <button class="btn" id="importBtn">📂 Загрузить прогресс</button>
+        <button class="btn danger" id="resetBtn">⟳ Сбросить</button>
+        <input type="file" id="importFile" accept=".json" style="display:none;">
     </div>
 
     <div class="footer">
@@ -371,9 +380,15 @@
     </div>
 </div>
 
+<div class="save-notice" id="saveNotice">✓ Сохранено</div>
+
 <script>
-    (function() {
-        const modules = [{
+(function () {
+    'use strict';
+
+    // ============ ДАННЫЕ ============
+    const modules = [
+        {
             id: 'm0',
             title: '📦 0. Git, GitHub и система контроля версий',
             meta: '1–2 нед',
@@ -383,7 +398,8 @@
                 { id: 't2', name: '0.3 GitLab', sub: 'CI/CD, репозитории, Pipeline', resources: [{ label: 'GitLab Docs', url: 'https://docs.gitlab.com/ru/' }] },
                 { id: 't3', name: '0.4 .gitignore', sub: 'исключение файлов из репозитория', resources: [{ label: 'GitHub', url: 'https://github.com/github/gitignore' }] }
             ]
-        }, {
+        },
+        {
             id: 'm1',
             title: '📘 1. Python — полный курс (по Яндекс Практикуму)',
             meta: '1.5–2 мес',
@@ -402,7 +418,8 @@
                 { id: 't15', name: '1.12 Модули и библиотеки', sub: 'import, math, random, datetime', resources: [{ label: 'Docs Python', url: 'https://docs.python.org/3/library/' }] },
                 { id: 't16', name: '⭐ 1.13 Итоговый проект', sub: 'сборка всего изученного', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm2',
             title: '🗄️ 2. SQL и базы данных (PostgreSQL) — ПРОДВИНУТЫЙ УРОВЕНЬ',
             meta: '4–5 нед',
@@ -420,7 +437,8 @@
                 { id: 't27', name: '2.11 UNION, INTERSECT, EXCEPT', sub: 'объединение и пересечение выборок', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/300016/' }] },
                 { id: 't28', name: '2.12 Практика: 40+ задач на SQL', sub: 'закрепление всех тем', resources: [{ label: 'SQL Academy', url: 'https://sql-academy.org/ru' }] }
             ]
-        }, {
+        },
+        {
             id: 'm3',
             title: '🌐 3. HTTP, API и веб-протоколы',
             meta: '2–3 нед',
@@ -431,7 +449,8 @@
                 { id: 't32', name: '3.4 Postman', sub: 'тестирование API', resources: [{ label: 'Postman', url: 'https://www.postman.com/' }] },
                 { id: 't33', name: '3.5 Авторизация (JWT, OAuth2)', sub: 'аутентификация и безопасность', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/340194/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm4',
             title: '🚀 4. FastAPI — полный стек (включая SQLAlchemy)',
             meta: '3–4 мес',
@@ -449,7 +468,8 @@
                 { id: 't44', name: '4.11 Логирование и конфигурация', sub: 'logging, pydantic-settings, python-dotenv', resources: [{ label: 'FastAPI Logging', url: 'https://fastapi.tiangolo.com/how-to/configure-logging/' }] },
                 { id: 't45', name: '⭐ 4.12 Пет-проект: API отелей', sub: 'FastAPI + Pydantic + SQLAlchemy + Alembic + Async + PostgreSQL', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm5',
             title: '🐳 5. Docker и контейнеризация',
             meta: '3–4 нед',
@@ -459,7 +479,8 @@
                 { id: 't48', name: '5.3 PostgreSQL в Docker', sub: 'настройка базы в контейнере', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/578744/' }] },
                 { id: 't49', name: '5.4 Docker для FastAPI', sub: 'сборка и запуск API в контейнере', resources: [{ label: 'FastAPI Docker', url: 'https://fastapi.tiangolo.com/deployment/docker/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm6',
             title: '🔧 6. Тестирование и качество кода',
             meta: '3–4 нед',
@@ -468,7 +489,8 @@
                 { id: 't51', name: '6.2 Интеграционные тесты', sub: 'тестирование API и БД', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/523094/' }] },
                 { id: 't52', name: '6.3 PEP8 и линтеры', sub: 'flake8, black, mypy', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/440908/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm7',
             title: '⚙️ 7. CI/CD и деплой',
             meta: '3–4 нед',
@@ -479,7 +501,8 @@
                 { id: 't56', name: '7.4 Облачные платформы', sub: 'Render, Railway, Yandex Cloud', resources: [{ label: 'Render', url: 'https://render.com/' }] },
                 { id: 't57', name: '7.5 Reverse Proxy', sub: 'Nginx, балансировка', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/620285/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm8',
             title: '⚡ 8. Асинхронность и брокеры сообщений',
             meta: '1.5–2 мес',
@@ -489,7 +512,8 @@
                 { id: 't60', name: '8.3 Брокеры сообщений', sub: 'RabbitMQ, Celery, Kafka', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/417935/' }] },
                 { id: 't61', name: '8.4 S3 и файловое хранение', sub: 'облачное хранение', resources: [{ label: 'Yandex Cloud S3', url: 'https://cloud.yandex.ru/docs/storage/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm9',
             title: '📊 9. Мониторинг и оркестрация',
             meta: '1–1.5 мес',
@@ -497,7 +521,8 @@
                 { id: 't62', name: '9.1 Мониторинг и логирование', sub: 'Prometheus, Grafana, ELK', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] },
                 { id: 't63', name: '9.2 Kubernetes', sub: 'оркестрация контейнеров', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/490754/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm10',
             title: '💼 10. Проекты (5–6 проектов)',
             meta: '2 мес',
@@ -509,7 +534,8 @@
                 { id: 't68', name: '⭐ 10.5 Микросервис с брокером', sub: 'RabbitMQ + FastAPI', resources: [{ label: 'GitHub', url: 'https://github.com/' }] },
                 { id: 't69', name: '⭐ 10.6 API с асинхронным WebSocket', sub: 'чаты, уведомления, real-time', resources: [{ label: 'GitHub', url: 'https://github.com/' }] }
             ]
-        }, {
+        },
+        {
             id: 'm11',
             title: '🎯 11. Карьера и Soft Skills',
             meta: 'параллельно',
@@ -518,125 +544,244 @@
                 { id: 't71', name: '11.2 Как составить резюме', sub: 'структура и советы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/660127/' }] },
                 { id: 't72', name: '11.3 Подготовка к собеседованиям', sub: 'типовые вопросы', resources: [{ label: 'Хабр', url: 'https://habr.com/ru/post/551026/' }] }
             ]
-        }];
+        }
+    ];
 
-        const STORAGE_KEY = 'backend_roadmap_fastapi_v3';
+    const STORAGE_KEY = 'backend_roadmap_fastapi_v3';
 
-        function loadProgress() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEY);
-                if (data) {
-                    const parsed = JSON.parse(data);
-                    if (typeof parsed === 'object') return parsed;
-                }
-            } catch (e) { /* ignore */ }
+    // ============ СОСТОЯНИЕ ============
+    const allTopicIds = modules.flatMap(m => m.topics.map(t => t.id));
+    let progress = {};
+
+    // ============ LOCALSTORAGE (с защитой) ============
+    function isStorageAvailable() {
+        try {
+            const test = '__ls_test__';
+            localStorage.setItem(test, test);
+            localStorage.removeItem(test);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    const storageOK = isStorageAvailable();
+
+    function loadProgress() {
+        if (!storageOK) return {};
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return {};
+            const parsed = JSON.parse(raw);
+            return (parsed && typeof parsed === 'object') ? parsed : {};
+        } catch (e) {
+            console.warn('Не удалось прочитать прогресс:', e);
             return {};
         }
+    }
 
-        function saveProgress(progress) {
+    function saveProgress() {
+        if (!storageOK) return;
+        try {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+            showSaveNotice();
+        } catch (e) {
+            console.warn('Не удалось сохранить прогресс:', e);
         }
+    }
 
-        let progress = loadProgress();
-        const allTopicIds = modules.flatMap(m => m.topics.map(t => t.id));
+    // ============ УВЕДОМЛЕНИЕ О СОХРАНЕНИИ ============
+    let noticeTimer = null;
+    function showSaveNotice() {
+        const notice = document.getElementById('saveNotice');
+        if (!notice) return;
+        notice.classList.add('show');
+        if (noticeTimer) clearTimeout(noticeTimer);
+        noticeTimer = setTimeout(() => notice.classList.remove('show'), 900);
+    }
 
-        let changed = false;
-        allTopicIds.forEach(id => {
-            if (!(id in progress)) {
-                progress[id] = false;
-                changed = true;
-            }
-        });
-        if (changed) saveProgress(progress);
+    // ============ ИНИЦИАЛИЗАЦИЯ ============
+    progress = loadProgress();
+    allTopicIds.forEach(id => {
+        if (typeof progress[id] !== 'boolean') progress[id] = false;
+    });
 
-        function renderModules() {
-            const container = document.getElementById('modulesContainer');
-            let html = '';
+    // ============ РЕНДЕР ============
+    function renderModules() {
+        const container = document.getElementById('modulesContainer');
+        const parts = [];
 
-            modules.forEach((module) => {
-                const doneCount = module.topics.filter(t => progress[t.id] === true).length;
-                const total = module.topics.length;
-                html += `<div class="module">`;
-                html += `<div class="module-header" data-module="${module.id}">`;
-                html += `<h2>${module.title}</h2>`;
-                html += `<span class="meta">${module.meta} · ${doneCount}/${total}</span>`;
-                html += `</div>`;
-                html += `<div class="module-body">`;
-                module.topics.forEach(topic => {
-                    const isDone = progress[topic.id] === true;
-                    const isProject = topic.name.includes('⭐');
-                    html += `<div class="topic ${isDone ? 'done' : ''}" data-topic="${topic.id}">`;
-                    html += `<div class="left">`;
-                    html += `<span class="status">${isDone ? '✅' : '⬜'}</span>`;
-                    html += `<span class="name">${topic.name} <span class="sub">${topic.sub}</span>`;
-                    if (isProject) {
-                        html += `<span class="project-badge">⭐ проект</span>`;
-                    }
-                    html += `</span>`;
-                    html += `</div>`;
-                    html += `<div class="resources">`;
-                    if (topic.resources && topic.resources.length) {
-                        topic.resources.forEach(r => {
-                            html += `<a href="${r.url}" target="_blank">${r.label}</a>`;
-                        });
-                    }
-                    html += `</div>`;
-                    html += `</div>`;
-                });
-                html += `</div>`;
-                html += `</div>`;
+        modules.forEach(module => {
+            const doneCount = module.topics.filter(t => progress[t.id] === true).length;
+            const total = module.topics.length;
+
+            parts.push('<div class="module">');
+            parts.push(
+                `<div class="module-header" data-module="${module.id}">` +
+                `<h2>${module.title}</h2>` +
+                `<span class="meta">${module.meta} · ${doneCount}/${total}</span>` +
+                '</div>'
+            );
+            parts.push('<div class="module-body">');
+
+            module.topics.forEach(topic => {
+                const isDone = progress[topic.id] === true;
+                const isProject = topic.name.includes('⭐');
+                const res = (topic.resources || [])
+                    .map(r => `<a href="${r.url}" target="_blank" rel="noopener">${r.label}</a>`)
+                    .join('');
+
+                parts.push(
+                    `<div class="topic ${isDone ? 'done' : ''}" data-topic="${topic.id}">` +
+                        '<div class="left">' +
+                            `<span class="status">${isDone ? '✅' : '⬜'}</span>` +
+                            `<span class="name">${topic.name} <span class="sub">${topic.sub}</span>` +
+                                (isProject ? '<span class="project-badge">⭐ проект</span>' : '') +
+                            '</span>' +
+                        '</div>' +
+                        `<div class="resources">${res}</div>` +
+                    '</div>'
+                );
             });
 
-            container.innerHTML = html;
-
-            document.querySelectorAll('.topic').forEach(el => {
-                el.addEventListener('click', function(e) {
-                    if (e.target.tagName === 'A') return;
-                    const id = this.dataset.topic;
-                    if (!id) return;
-                    progress[id] = !progress[id];
-                    saveProgress(progress);
-                    renderModules();
-                    updateGlobalProgress();
-                });
-            });
-
-            document.querySelectorAll('.module-header').forEach(header => {
-                header.addEventListener('click', function() {
-                    const body = this.nextElementSibling;
-                    if (body && body.classList.contains('module-body')) {
-                        const display = window.getComputedStyle(body).display;
-                        body.style.display = display === 'none' ? 'block' : 'none';
-                    }
-                });
-            });
-
-            updateGlobalProgress();
-        }
-
-        function updateGlobalProgress() {
-            const all = allTopicIds.length;
-            if (all === 0) return;
-            let done = 0;
-            allTopicIds.forEach(id => {
-                if (progress[id] === true) done++;
-            });
-            const percent = Math.round((done / all) * 100);
-            document.getElementById('progressPercent').textContent = `${percent}% (${done}/${all})`;
-            document.getElementById('progressFill').style.width = `${percent}%`;
-        }
-
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            if (confirm('Сбросить весь прогресс?')) {
-                allTopicIds.forEach(id => progress[id] = false);
-                saveProgress(progress);
-                renderModules();
-                updateGlobalProgress();
-            }
+            parts.push('</div></div>');
         });
 
+        container.innerHTML = parts.join('');
+        updateGlobalProgress();
+    }
+
+    // ============ ОБНОВЛЕНИЕ ПРОГРЕССА ============
+    function updateGlobalProgress() {
+        const total = allTopicIds.length;
+        if (!total) return;
+        const done = allTopicIds.filter(id => progress[id] === true).length;
+        const percent = Math.round((done / total) * 100);
+
+        document.getElementById('progressPercent').textContent = `${percent}% (${done}/${total})`;
+        document.getElementById('progressFill').style.width = `${percent}%`;
+    }
+
+    function updateModuleCounter(moduleId) {
+        const module = modules.find(m => m.id === moduleId);
+        if (!module) return;
+        const header = document.querySelector(`.module-header[data-module="${moduleId}"] .meta`);
+        if (!header) return;
+        const doneCount = module.topics.filter(t => progress[t.id] === true).length;
+        header.textContent = `${module.meta} · ${doneCount}/${module.topics.length}`;
+    }
+
+    // ============ ДЕЛЕГИРОВАНИЕ СОБЫТИЙ ============
+    document.getElementById('modulesContainer').addEventListener('click', function (e) {
+        // Клик по ссылке — не перехватываем
+        if (e.target.tagName === 'A') return;
+
+        // Заголовок модуля — свернуть / развернуть
+        const header = e.target.closest('.module-header');
+        if (header) {
+            const body = header.nextElementSibling;
+            if (body && body.classList.contains('module-body')) {
+                body.style.display = (body.style.display === 'none') ? 'block' : 'none';
+            }
+            return;
+        }
+
+        // Клик по теме — переключить прогресс
+        const topicEl = e.target.closest('.topic');
+        if (!topicEl) return;
+
+        const id = topicEl.dataset.topic;
+        if (!id) return;
+
+        progress[id] = !progress[id];
+        saveProgress();
+
+        // Обновляем только этот топик — без полной перерисовки
+        topicEl.classList.toggle('done', progress[id]);
+        const statusEl = topicEl.querySelector('.status');
+        if (statusEl) statusEl.textContent = progress[id] ? '✅' : '⬜';
+
+        // Находим модуль и обновляем его счётчик
+        const moduleEl = topicEl.closest('.module');
+        if (moduleEl) {
+            const moduleHeader = moduleEl.querySelector('.module-header');
+            if (moduleHeader) updateModuleCounter(moduleHeader.dataset.module);
+        }
+
+        updateGlobalProgress();
+    });
+
+    // ============ СБРОС ============
+    document.getElementById('resetBtn').addEventListener('click', function () {
+        if (!confirm('Сбросить весь прогресс?')) return;
+        allTopicIds.forEach(id => progress[id] = false);
+        saveProgress();
         renderModules();
-    })();
+    });
+
+    // ============ ЭКСПОРТ ============
+    document.getElementById('exportBtn').addEventListener('click', function () {
+        const data = {
+            version: 3,
+            exportedAt: new Date().toISOString(),
+            progress: progress
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `backend_roadmap_${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    // ============ ИМПОРТ ============
+    const importFile = document.getElementById('importFile');
+
+    document.getElementById('importBtn').addEventListener('click', () => {
+        importFile.click();
+    });
+
+    importFile.addEventListener('change', function (e) {
+        const file = e.target.files && e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+            try {
+                const parsed = JSON.parse(ev.target.result);
+                const imported = parsed && parsed.progress ? parsed.progress : parsed;
+                if (!imported || typeof imported !== 'object') {
+                    throw new Error('Неверный формат файла');
+                }
+                allTopicIds.forEach(id => {
+                    progress[id] = imported[id] === true;
+                });
+                saveProgress();
+                renderModules();
+                alert('✅ Прогресс успешно загружен!');
+            } catch (err) {
+                alert('❌ Ошибка чтения файла: ' + err.message);
+            } finally {
+                importFile.value = '';
+            }
+        };
+        reader.readAsText(file);
+    });
+
+    // ============ ПРЕДУПРЕЖДЕНИЕ О STORAGE ============
+    if (!storageOK) {
+        const warn = document.createElement('div');
+        warn.style.cssText = 'background:#fef2f2;color:#991b1b;border:1px solid #fecaca;padding:14px 20px;border-radius:12px;margin-bottom:20px;font-size:13px;font-family:JetBrains Mono,monospace;';
+        warn.innerHTML = '⚠️ <b>localStorage недоступен.</b> Прогресс не сохраняется. Открой файл через локальный сервер (<code>python -m http.server</code>) или используй кнопки «Скачать/Загрузить прогресс».';
+        document.querySelector('.container').insertBefore(warn, document.getElementById('modulesContainer'));
+    }
+
+    // ============ СТАРТ ============
+    renderModules();
+})();
 </script>
 </body>
 </html>
